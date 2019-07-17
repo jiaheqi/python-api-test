@@ -25,7 +25,6 @@ test_module = [test_sms]
 '''运行测试套件并生成报告'''
 business.run_and_report(
     test_module=test_module,
-    # report_file_name="test_equity",
     report_file_name="test_sms",
     title=u"HuaLaLa  Service",
     description=u"autotest_server")
