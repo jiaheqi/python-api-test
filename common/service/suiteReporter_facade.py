@@ -17,7 +17,7 @@ class SuiteReporter_Utils():
         :param test_module: 被测模块，字符串
         :return:返回报告名
         """
-        __date = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-')
+        __date = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
         __report_file_name = "../report/" + __date + test_module + ".html"
         return __report_file_name
 
