@@ -1,0 +1,317 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.equityaccount.grpc";
+option java_outer_classname = "AccountData";
+import "commons.proto";
+
+message PersonalOpenAccountReq {  
+   // 客户姓名
+   string name=2;
+   // 身份证号
+   string idCard=3;
+   // 手机号
+   string phone=4;
+   // 性别 0男1女
+   string sex=5;
+   // 员工id
+   string staffID=6;
+   // 集团id
+   string groupID=22;
+   // 集团名称
+   string groupName=23;
+   // 业务类型,固定值，由权益账户提供
+   string businessCode=24;
+   // 子业务类型 固定值，由权益账户提供
+   string subBusinessCode=25;
+   // 是否需要支付密码,0不需要1需要，目前固定传0
+   int32 isPassWord=26;
+   // 支付密码,传空串
+   string paymentPassWord=27;
+   // 是否信用账户 0否1是  个人用户传固定值0
+   int32 isCredit=28;
+   // 操作员
+   string operator=29;
+   // 备注
+   string note=30;
+   // 账户名称
+   string accountName=31;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message PersonalOpenAccountRes {  
+   // 员工id
+   string staffID=2;
+   // 集团id
+   string groupID=3;
+   // 权益账号
+   string accountNo=4;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message UpdateAccountInfoRequest {  
+   // 权益账号
+   string accountNo=2;
+   // 业务类型,固定值，由权益账户提供
+   string businessCode=3;
+   // 子业务类型 固定值，由权益账户提供
+   string subBusinessCode=4;
+   // 集团id
+   string groupID=5;
+   // 账户名称
+   string accountName=6;
+   // 提醒阀值
+   repeated AlarmModel alarm=7;
+   // 操作员
+   string operator=8;
+   // 是否使用推荐阀值 0不使用  1使用
+   int32 useDefaultAlarm=9;
+   // 账户类型  1商户2用户
+   string type=10;
+   // 备注
+   string note=11;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message AlarmModel {  
+   // 报警金额
+   string alarmAmt=2;
+   // 报警电话
+   string alarmPhone=3;
+   // 报警类型 1按金额2按消费次数
+   int32 alarmType=4;
+   // 周期单位 0无 1天 2周 3月 4年
+   int32 unitCycle=5;
+   // 下次报警时间
+   string nextAlarmTime=6;
+}
+message UpdateAccountInfoResponse {  
+   // 权益账号
+   string accountNo=2;
+   // 账户名称
+   string accountName=3;
+   // 提醒阀值
+   repeated AlarmModel alarm=4;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message QueryMerchantInfoRequest {  
+   // 账户ID
+   string accountNo=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message QueryMerchantInfoResponse {  
+   // 商户信息
+   MerchantModel merchantModel=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message MerchantModel {  
+   // 集团id
+   string groupId=2;
+   // 集团名称
+   string groupName=3;
+   // 权益账户名称
+   string accountName=4;
+   // 业务类型
+   string businessCode=5;
+   // 子业务类型
+   string subBusinessCode=6;
+   // 权益账户id
+   string accountNo=7;
+   // 店铺号
+   string storeCode=8;
+   // 是否加盟店，0否1是
+   string isFranchise=9;
+   // 是否使用推荐阀值 0不使用 1使用
+   string useDefaultAlarm=10;
+}
+message AccountNatureRequest {  
+   string accountNo=2;
+   string accountNature=3;
+   string creditAmt=4;
+   //结算周期,具体的天数，写数据1，2，3，需要更具单位判断值的范围
+   string settleCycle=5;
+   string groupID=6;
+   string bizType=7;
+   string subBizType=8;
+   string operator=9;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message AccountNatureResponse {  
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message OpenAccountRequest {  
+   // 提醒阀值
+   repeated AlarmModel alarm=2;
+   // 店铺号
+   string storeCode=3;
+   // 是否是加盟店 0否1是
+   int32 isFranchise=4;
+   // 是否使用推荐阀值 0不使用  1使用
+   int32 useDefaultAlarm=5;
+   // 集团id
+   string groupID=22;
+   // 集团名称
+   string groupName=23;
+   // 业务类型,固定值，由权益账户提供
+   string businessCode=24;
+   // 子业务类型 固定值，由权益账户提供
+   string subBusinessCode=25;
+   // 是否需要支付密码,0不需要1需要，目前固定传0
+   int32 isPassWord=26;
+   // 支付密码,传空串
+   string paymentPassWord=27;
+   // 是否信用账户 0否1是  个人用户传固定值0
+   int32 isCredit=28;
+   // 操作员
+   string operator=29;
+   // 备注
+   string note=30;
+   // 账户名称
+   string accountName=31;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message OpenAccountResponse {  
+   // 权益账号
+   string accountNo=2;
+   // 集团id
+   string groupID=3;
+   // 账户名称
+   string accountName=4;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message QueryBalanceReq {  
+   // 权益账号
+   string accountNo=2;
+   // 支付密码,目前传空串
+   string paymentPassWord=3;
+   // 业务类型,固定值，由权益账户提供
+   string businessCode=4;
+   // 子业务类型 固定值，由权益账户提供
+   string subBusinessCode=5;
+   // 集团id
+   string groupID=6;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message QueryBalanceRes {  
+   // 权益账号
+   string accountNo=2;
+   // 余额
+   string balance=3;
+   // 权益账号名称
+   string accountName=4;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message QueryAccountListRequest {  
+   // 集团id
+   string groupID=2;
+   // 业务类型,固定值，由权益账户提供
+   string businessCode=3;
+   // 子业务类型 固定值，由权益账户提供
+   string subBusinessCode=4;
+   // 账户类型  1商户2用户
+   string type=5;
+   // 是否是信用账户  0否1是 个人用户传固定值0
+   string isCredit=6;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message QueryAccountListResponse {  
+   // 账户信息列表
+   repeated AccountModel records=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message AccountModel {  
+   // 账户ID
+   string accountNo=2;
+   // 账户名称
+   string accountName=3;
+   // 账户余额
+   string balance=4;
+   // 余额单位 0元 1条 2个 3份 4次 5分钱 
+   string balanceUnit=5;
+   // 账户类型
+   string type=6;
+   // 是否是信用账户
+   string isCredit=7;
+   string creditAmt=8;
+}
+message FreezeAccountRequest {  
+   // 账户ID
+   string accountNo=2;
+   // 账户名称
+   string accountName=3;
+   // 账户状态
+   int32 accountState=4;
+   // 操作人
+   string operator=5;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message FreezeAccountResponse {  
+   // 账户ID
+   string accountNo=2;
+   // 账户名称
+   string accountName=3;
+   // 账户状态
+   int32 accountState=4;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message CreditAmountRequest {  
+   // 账户ID
+   string accountNo=2;
+   // 账户名称
+   string accountName=3;
+   // 透支额度
+   string creditAmt=4;
+   // 操作人
+   string operator=5;
+   // 是否是信用账户
+   string isCredit=6;
+   // 业务类型
+   string businessCode=7;
+   // 业务自类型
+   string subBusinessCode=8;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CreditAmountResponse {  
+   // 账户ID
+   string accountNo=2;
+   // 账户名称
+   string accountName=3;
+   // 透支额度
+   string creditAmt=4;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//账户的开户、修改、查询
+service AccountService{
+    //个人开户
+    rpc personalOpenAccount(PersonalOpenAccountReq) returns (PersonalOpenAccountRes) {}
+    //账户信息修改
+    rpc updateAccountInfo(UpdateAccountInfoRequest) returns (UpdateAccountInfoResponse) {}
+    //查询账户信息
+    rpc queryMerchantInfo(QueryMerchantInfoRequest) returns (QueryMerchantInfoResponse) {}
+    //转换账户性质
+    rpc transAccountNature(AccountNatureRequest) returns (AccountNatureResponse) {}
+    //企业开户
+    rpc openAccount(OpenAccountRequest) returns (OpenAccountResponse) {}
+    //余额查询（个人企业通用）
+    rpc queryBalance(QueryBalanceReq) returns (QueryBalanceRes) {}
+    //企业账户列表查询
+    rpc queryAccountList(QueryAccountListRequest) returns (QueryAccountListResponse) {}
+    //账户冻结、解冻
+    rpc freezeAccount(FreezeAccountRequest) returns (FreezeAccountResponse) {}
+    //设置透支额度
+    rpc creditAccount(CreditAmountRequest) returns (CreditAmountResponse) {}
+}

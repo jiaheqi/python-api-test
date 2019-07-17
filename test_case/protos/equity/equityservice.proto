@@ -1,0 +1,845 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.equity.grpc";
+option java_outer_classname = "EquityData";
+import "commons.proto";
+
+message AccountRequest {  
+   // accountModel
+   AccountModel accountModel=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message AccountModel {  
+   // 归属归属组织ID
+   string organizationId=2;
+   // 归属归属组织类型
+   OrganizationType organizationType=3;
+   // 最大透支金额
+   int64 overdraftAmount=4;
+   // 是否允许扣减为负
+   string isAllowNegtive=5;
+   // 是否允许提现
+   string isAllowWithdrawal=6;
+   // 是否允许充值
+   string isAllowRecharge=7;
+   // 资产账号名称
+   string accountName=8;
+   // 资产账号名称
+   EquityType equityType=9;
+   // 金额单位
+   BalanceUnit balanceUnit=10;
+   // 交易日期
+   string transDate=11;
+   // 交易时间
+   string transTime=12;
+   // 操作员
+   string operatorId=13;
+   // 备注
+   string memo=14;
+   // 业务来源
+   string businessSrc=15;
+   // 业务类型
+   string businessType=16;
+   // 二级业务类型
+   string subBusinessType=17;
+   // 业务来源TOKEN
+   string businessSrcToken=18;
+   // 资产告警数量
+   int64 alarmAmount=19;
+   // 资产告警电话
+   string alarmPhone=20;
+   // 资产告警策略
+   string alarmStrategy=21;
+   // 资产告警数量
+   string alarmAmounts=22;
+   // 是否使用默认报警阀值
+   string useDefaultAlarm=23;
+}
+enum OrganizationType {  
+   ORGANIZATION_TYPE_NONE=0;
+   GROUP=1;
+   STORE=2;
+   HUALALA=3;
+}
+enum EquityType {  
+   EQUITY_TYPE_NONE=0;
+   SMS=1;
+   ID_CARD=2;
+   INTERVIEW=3;
+   PAYMENT_FLOW=4;
+   ELECTRONIC_INVOICE=5;
+   RED_PACKET_WECHAT=6;
+   DELIVERY=7;
+}
+enum BalanceUnit {  
+   BALANCE_UNIT_NONE=0;
+   SCALE_TIAO=1;
+   SCALE_GE=2;
+   SCALE_FEN=3;
+   SCALE_CI=4;
+   RMB_FEN=5;
+   RMB_YUAN=6;
+}
+message AccountResponse {  
+   // accountModel
+   AccountModel accountModel=2;
+   // ID
+   string id=3;
+   // 资产账号
+   string accountNo=4;
+   // 资产账号状态
+   AccountState accountState=5;
+   // 账户余额
+   int64 accountBalance=6;
+   // 冻结余额
+   int64 freezeBalance=7;
+   // 版本号
+   int32 version=8;
+   // 记录状态
+   RecordState action=9;
+   // 创建时间
+   string createStamp=10;
+   // 修改时间
+   string actionStamp=11;
+   // 头寸余额
+   int64 cacheBalance=12;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+enum AccountState {  
+   ACCOUNT_STATE_NONE=0;
+   OPENED=1;
+   CLOSED=2;
+   FREEZED=3;
+   CANCELED=4;
+}
+enum RecordState {  
+   CREATED=0;
+   MODIFIED=1;
+   DELETED=2;
+   RecordState_NONE=3;
+}
+message ConsumeRequest {  
+   // rechargeModel
+   ConsumeModel model=2;
+   // 是否余额全部消费
+   string isconsumeAll=3;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message ConsumeModel {  
+   // 请求方流水号
+   string consumeOrderNo=2;
+   // 资产账号
+   string accountNo=3;
+   // 资产扣减数量
+   int64 consumeAmount=4;
+   // 业务来源
+   string businessSrc=5;
+   // 业务类型
+   string businessType=6;
+   // 二级业务类型
+   string subBusinessType=7;
+   // 业务来源TOKEN
+   string businessSrcToken=8;
+   // 交易日期
+   string transDate=9;
+   // 交易时间
+   string transTime=10;
+   // 操作员
+   string operatorId=11;
+   // 备注
+   string memo=12;
+}
+message ConsumeResponse {  
+   // consumeModel
+   ConsumeModel model=2;
+   // 资产消费流水号
+   string consumeTransNo=3;
+   // 记录状态
+   RecordState action=4;
+   // 创建时间
+   string createStamp=5;
+   // 修改时间
+   string actionStamp=6;
+   // 消费交易状态
+   ConsumeTransState consumeTransState=7;
+   // ID
+   string id=8;
+   // 资产账号名称
+   string accountName=9;
+   // 当前余额
+   int64 currentBalance=10;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+enum ConsumeTransState {  
+   CONSUME_TRANS_STATE_NONE=0;
+   CONSUME_INIT=1;
+   CONSUME_SUCCESS=2;
+   CONSUME_FAIL=3;
+   CONSUME_UNKNOWN=4;
+   ALLREADY_CORRECT=5;
+   PART_CORRECT=6;
+}
+message CorrectRequest {  
+   // correctModel
+   CorrectModel model=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CorrectModel {  
+   // 请求方流水号
+   string correctOrderNo=2;
+   // 原资产消费流水号
+   string originalConsumeTransNo=3;
+   // 资产账号
+   string accountNo=4;
+   // 资产扣减数量
+   int64 correctAmount=5;
+   // 原资产消费数量
+   int64 originalConsumeAmount=6;
+   // 业务来源
+   string businessSrc=7;
+   // 业务类型
+   string businessType=8;
+   // 二级业务类型
+   string subBusinessType=9;
+   // 业务来源TOKEN
+   string businessSrcToken=10;
+   // 交易日期
+   string transDate=11;
+   // 交易时间
+   string transTime=12;
+   // 操作员
+   string operatorId=13;
+   // 备注
+   string memo=14;
+}
+message CorrectResponse {  
+   // correctModel
+   CorrectModel model=2;
+   // 冲正交易状态
+   CorrectTransState correctTransState=3;
+   // 资产消费流水号
+   string correctTransNo=4;
+   // 创建时间
+   string createStamp=5;
+   // 修改时间
+   string actionStamp=6;
+   // 记录状态
+   RecordState action=7;
+   // ID
+   string id=8;
+   // 资产账号名称
+   string accountName=9;
+   // 当前余额
+   int64 currentBalance=10;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+enum CorrectTransState {  
+   CORRECT_TRANS_STATE_NONE=0;
+   CORRECT_INIT=1;
+   CORRECT_SUCCESS=2;
+   CORRECT_FAIL=3;
+   CORRECT_UNKNOWN=4;
+}
+message RefundRequest {  
+   // 资产账号
+   string accountNo=2;
+   // 业务方退款请求流水号
+   string recfundOrderNo=3;
+   // 原资产充值流水号
+   string oldRechargeTransNo=4;
+   // 业务来源TOKEN
+   string businessSrcToken=5;
+   // 操作员
+   string operatorId=6;
+   // 交易日期
+   string transDate=7;
+   // 交易时间
+   string transTime=8;
+   // 备注
+   string memo=9;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message RefundResponse {  
+   // refundModel
+   RefundModel model=2;
+   // 冲正交易状态
+   RefundTransState refundTransState=3;
+   // 资产消费流水号
+   string refundTransNo=4;
+   // 创建时间
+   string createStamp=5;
+   // 修改时间
+   string actionStamp=6;
+   // 记录状态
+   RecordState action=7;
+   // ID
+   string id=8;
+   // 资产账号名称
+   string accountName=9;
+   // 当前余额
+   int64 currentBalance=10;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+enum RefundTransState {  
+   REFUND_TRANS_STATE_NONE=0;
+   REFUND_INIT=1;
+   REFUND_SUCCESS=2;
+   REFUND_FAIL=3;
+   REFUND_UNKNOWN=4;
+}
+message RefundModel {  
+   // 请求方流水号
+   string refundOrderNo=2;
+   // 原资产充值流水号
+   string oldRechargeTransNo=3;
+   // 资产账号
+   string accountNo=4;
+   // 充值退款数量
+   int64 refundAmount=5;
+   // 原资产充值数量
+   int64 originalRechargeAmount=6;
+   // 业务来源
+   string businessSrc=7;
+   // 业务类型
+   string businessType=8;
+   // 二级业务类型
+   string subBusinessType=9;
+   // 业务来源TOKEN
+   string businessSrcToken=10;
+   // 交易日期
+   string transDate=11;
+   // 交易时间
+   string transTime=12;
+   // 操作员
+   string operatorId=13;
+   // 备注
+   string memo=14;
+}
+message RechargeRequest {  
+   // rechargeModel
+   RechargeModel model=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message RechargeModel {  
+   // 业务方充值请求流水号
+   string rechargeOrderNo=2;
+   // 资产账号
+   string accountNo=3;
+   // 资产充值数量
+   int64 rechargeAmount=4;
+   // 业务来源
+   string businessSrc=5;
+   // 业务类型
+   string businessType=6;
+   // 二级业务类型
+   string subBusinessType=7;
+   // 业务来源TOKEN
+   string businessSrcToken=8;
+   // 交易日期
+   string transDate=9;
+   // 交易时间
+   string transTime=10;
+   // 操作员
+   string operatorId=11;
+   // 备注
+   string memo=12;
+   // 订单金额
+   int64 orderMoney=13;
+   // 支付类型
+   string payType=14;
+   // 可开票金额
+   int64 voicedMoney=15;
+}
+message RechargeResponse {  
+   // rechargeModel
+   RechargeModel model=2;
+   // 充值交易流水号
+   string rechargeTransNo=3;
+   // 记录状态
+   RecordState action=4;
+   // 创建时间
+   string createStamp=5;
+   // 修改时间
+   string actionStamp=6;
+   // 交易状态
+   RechargeTransState rechargeTransState=7;
+   // ID
+   string id=8;
+   // 开票状态
+   string voicedState=9;
+   // 电子发票ID
+   string voicedId=11;
+   // 资产账号名称
+   string accountName=12;
+   // 当前余额
+   int64 currentBalance=13;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+enum RechargeTransState {  
+   RECHARGE_TRANS_STATE_NONE=0;
+   RECHARGE_INIT=1;
+   RECHARGE_SUCCESS=2;
+   RECHARGE_FAIL=3;
+   RECHARGE_UNKNOWN=4;
+}
+message CallBackInvoiceRequest {  
+   // 业务方充值请求流水号
+   string rechargeOrderNo=2;
+   // 充值交易流水号
+   string rechargeTransNo=3;
+   // 资产账号
+   string accountNo=4;
+   // 充值开票状态
+   bool invoiceStats=5;
+   // 归属归属组织ID
+   string groupID=6;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message CallBackInvoiceResponse {  
+   // 业务方充值请求流水号
+   string rechargeOrderNo=2;
+   // 充值交易流水号
+   string rechargeTransNo=3;
+   // 资产账号
+   string accountNo=4;
+   // 充值开票状态
+   bool invoiceStats=5;
+   // 归属归属组织ID
+   string groupID=6;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message UpdateAccountRequest {  
+   // 归属归属组织ID
+   string organizationId=2;
+   // 归属归属组织类型
+   OrganizationType organizationType=3;
+   // 资产账号名称
+   string accountName=4;
+   // 资产账号
+   string accountNo=5;
+   // 备注
+   string memo=6;
+   // 资产告警数量
+   int64 alarmAmount=7;
+   // 资产告警电话
+   string alarmPhone=8;
+   // 操作员
+   string operatorId=9;
+   // 是否使用默认报警阀值
+   string useDefaultAlarm=10;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message UpdateAccountResponse {  
+   // accountModel
+   AccountModel accountModel=2;
+   // ID
+   string id=3;
+   // 资产账号
+   string accountNo=4;
+   // 资产账号状态
+   AccountState accountState=5;
+   // 账户余额
+   int64 accountBalance=6;
+   // 冻结余额
+   int64 freezeBalance=7;
+   // 版本号
+   int32 version=8;
+   // 记录状态
+   RecordState action=9;
+   // 创建时间
+   string createStamp=10;
+   // 修改时间
+   string actionStamp=11;
+   // 头寸余额
+   int64 cacheBalance=12;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message AlarmRequest {  
+   // alarmModel
+   AlarmModel model=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message AlarmModel {  
+   // 资产账号
+   string accountNo=2;
+   // 资产账号名称
+   string accountName=3;
+   // 归属归属组织ID
+   string organizationId=4;
+   // 归属归属组织类型
+   string organizationType=5;
+   // 资产告警数量
+   string alarmAmount=6;
+   // 资产告警电话
+   string alarmPhone=7;
+   // 资产告警策略
+   string alarmStrategy=8;
+   // 备注
+   string memo=9;
+   // 是否使用默认报警阀值
+   string useDefaultAlarm=10;
+}
+message AlarmResponse {  
+   // alarmModel
+   AlarmModel model=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message TransferAccountRequest {  
+   // 资产账号
+   string fromAccountNo=2;
+   // 资产账号
+   string toAccountNo=3;
+   // 转账金额
+   int64 transferAmount=4;
+   // 操作员
+   string operatorId=5;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message RechargeQueryRequest {  
+   // 充值交易流水号
+   string rechargeTransNo=3;
+   // 业务方充值请求流水号
+   string rechargeOrderNo=4;
+   // 业务来源TOKEN
+   string businessSrcToken=5;
+   // 资产账号
+   string accountNo=6;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message RechargePageInfoRequest {  
+   // 交易日期起始值
+   string beginTransDate=3;
+   // 交易日期结束值
+   string endTransDate=4;
+   // 交易状态
+   RechargeTransState rechargeTransState=5;
+   // 资产账号
+   string accountNo=6;
+   // 总数不能为空
+   int32 totalSize=7;
+   // 查询分页信息
+   RequestPageHeader pageHeader=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message RechargePageInfoResponse {  
+   // 充值明细列表
+   repeated RechargeResponse records=3;
+   // 查询分页信息
+   ResultPageHeader pageHeader=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message ConsumeQueryRequest {  
+   // 资产消费流水号
+   string consumeTransNo=3;
+   // 请求方流水号
+   string consumeOrderNo=4;
+   // 业务来源TOKEN
+   string businessSrcToken=5;
+   // 资产账号
+   string accountNo=6;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message ConsumePageInfoRequest {  
+   // 交易日期起始值
+   string beginTransDate=3;
+   // 交易日期结束值
+   string endTransDate=4;
+   // 消费交易状态
+   ConsumeTransState consumeTransState=5;
+   // 资产账号
+   string accountNo=6;
+   // 总数不能为空
+   int32 totalSize=7;
+   // 查询分页信息
+   RequestPageHeader pageHeader=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message ConsumePageInfoResponse {  
+   // 消费明细列表
+   repeated ConsumeResponse records=3;
+   // 查询分页信息
+   ResultPageHeader pageHeader=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message CorrectQueryRequest {  
+   // 资产消费冲正流水号
+   string correctTransNo=3;
+   // 冲正请求流水号
+   string correctOrderNo=4;
+   // 业务来源TOKEN
+   string businessSrcToken=5;
+   // 资产账号
+   string accountNo=6;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CorrectPageInfoRequest {  
+   // 交易日期起始值
+   string beginTransDate=3;
+   // 交易日期结束值
+   string endTransDate=4;
+   // 冲正交易状态
+   CorrectTransState correctTransState=5;
+   // 资产账号
+   string accountNo=6;
+   // 查询分页信息
+   RequestPageHeader pageHeader=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CorrectPageInfoResponse {  
+   // 消费冲正明细列表
+   repeated CorrectResponse records=3;
+   // 查询分页信息
+   ResultPageHeader pageHeader=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message AccountPageInfoRequest {  
+   // 归属归属组织ID
+   string organizationId=3;
+   // 归属归属组织类型
+   OrganizationType organizationType=4;
+   // 资产账号名称
+   string accountName=5;
+   // 资产账号名称
+   EquityType equityType=6;
+   // 资产账号
+   string accountNo=7;
+   // 资产账号状态
+   AccountState accountState=8;
+   // 账户控制权限列表
+   string equityAccountNos=9;
+   // 是否允许扣减为负
+   string isAllowNegtive=10;
+   // 查询分页信息
+   RequestPageHeader pageHeader=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message AccountPageInfoResponse {  
+   // 账户列表
+   repeated AccountResponse records=3;
+   // 查询分页信息
+   ResultPageHeader pageHeader=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message AccountPageParamInfoRequest {  
+   // 资产类型
+   EquityType equityType=3;
+   // 归属归属组织ID
+   string organizationIds=4;
+   // 资产账号
+   string accountNo=5;
+   // 资产账号状态
+   AccountState accountState=6;
+   // 账户控制权限列表
+   int64 balanceBefore=7;
+   // 账户控制权限列表
+   int64 balanceEnd=8;
+   // 账户控制权限列表
+   string balanceEnum=9;
+   // 账户控制权限列表
+   string orderby=10;
+   // 是否允许扣减为负
+   string isAllowNegtive=11;
+   // 资产账号名称
+   string accountName=12;
+   // 交易日期起始值
+   string beginTransDate=13;
+   // 交易日期结束值
+   string endTransDate=14;
+   // 查询的最小余额
+   double minBalance=15;
+   // 查询的最大余额
+   double maxBalance=16;
+   // 查询分页信息
+   RequestPageHeader pageHeader=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message AccountQueryRequest {  
+   // 资产账号
+   string accountNo=3;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message AccountAndAlarmQueryRequest {  
+   // 权益账户账号列表
+   string accountNoList=3;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message AccountAndAlarmPageInfoResponse {  
+   // 账户与报警列表
+   repeated AccountAndAlarmModel records=3;
+   // 查询分页信息
+   ResultPageHeader pageHeader=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message AccountAndAlarmModel {  
+   // 归属归属组织ID
+   string organizationId=2;
+   // 归属归属组织类型
+   OrganizationType organizationType=3;
+   // 最大透支金额
+   int64 overdraftAmount=4;
+   // 是否允许扣减为负
+   string isAllowNegtive=5;
+   // 是否允许提现
+   string isAllowWithdrawal=6;
+   // 是否允许充值
+   string isAllowRecharge=7;
+   // 资产账号名称
+   string accountName=8;
+   // 资产账号名称
+   EquityType equityType=9;
+   // 金额单位
+   BalanceUnit balanceUnit=10;
+   // 交易日期
+   string transDate=11;
+   // 交易时间
+   string transTime=12;
+   // 操作员
+   string operatorId=13;
+   // 备注
+   string memo=14;
+   // 业务来源
+   string businessSrc=15;
+   // 业务类型
+   string businessType=16;
+   // 二级业务类型
+   string subBusinessType=17;
+   // 业务来源TOKEN
+   string businessSrcToken=18;
+   // 资产告警数量
+   string alarmAmount=19;
+   // 资产告警电话
+   string alarmPhone=20;
+   // 资产告警策略
+   string alarmStrategy=21;
+   // 资产账号
+   string accountNo=22;
+   // 账户余额
+   int64 accountBalance=23;
+   // 资产账号状态
+   AccountState accountState=24;
+   // 冻结余额
+   int64 freezeBalance=25;
+   // 头寸余额
+   int64 cashBalance=26;
+   // 扩展属性
+   string properties=27;
+   // 版本号
+   int32 version=28;
+   // 记录状态
+   RecordState action=29;
+   // 创建时间
+   string createStamp=30;
+   // 修改时间
+   string actionStamp=31;
+   // 是否使用默认报警阀值
+   string useDefaultAlarm=32;
+}
+message UpdateAccountOpenRequest {  
+   // 归属归属组织ID
+   string organizationId=2;
+   // 归属归属组织类型
+   OrganizationType organizationType=3;
+   // 资产账号
+   string accountNo=5;
+   // 是否允许扣减为负
+   string isAllowNegtive=6;
+   // 资产账号状态
+   string accountState=7;
+   // 最大透支金额
+   int64 overdraftAmount=8;
+   // 操作员
+   string operatorId=9;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message UpdateAccountOpenResponse {  
+   // accountModel
+   AccountModel accountModel=2;
+   // ID
+   string id=3;
+   // 资产账号
+   string accountNo=4;
+   // 账户余额
+   int64 accountBalance=5;
+   // 创建时间
+   string createStamp=6;
+   // 修改时间
+   string actionStamp=7;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//
+service EquityService{
+    //开户
+    rpc open(AccountRequest) returns (AccountResponse) {}
+    //资产消费接口
+    rpc consume(ConsumeRequest) returns (ConsumeResponse) {}
+    //资产消费冲正接口
+    rpc correct(CorrectRequest) returns (CorrectResponse) {}
+    //资产充值退款接口
+    rpc refund(RefundRequest) returns (RefundResponse) {}
+    //资产充值接口
+    rpc recharge(RechargeRequest) returns (RechargeResponse) {}
+    //开票返回接口
+    rpc callBackInvoice(CallBackInvoiceRequest) returns (CallBackInvoiceResponse) {}
+    //修改权益账户
+    rpc updateAccount(UpdateAccountRequest) returns (UpdateAccountResponse) {}
+    //修改权益账户报警阀值
+    rpc updateAlarm(AlarmRequest) returns (AlarmResponse) {}
+    //权益账户转账
+    rpc transferAccount(TransferAccountRequest) returns (AccountResponse) {}
+    //查询充值明细
+    rpc queryRechargeDetail(RechargeQueryRequest) returns (RechargeResponse) {}
+    //查询充值列表
+    rpc queryRechargePageInfo(RechargePageInfoRequest) returns (RechargePageInfoResponse) {}
+    //查询消费明细
+    rpc queryConsumeDetail(ConsumeQueryRequest) returns (ConsumeResponse) {}
+    //查询消费列表
+    rpc queryConsumePageInfo(ConsumePageInfoRequest) returns (ConsumePageInfoResponse) {}
+    //查询消费冲正明细
+    rpc queryCorrectDetail(CorrectQueryRequest) returns (CorrectResponse) {}
+    //查询消费冲正列表
+    rpc queryCorrectPageInfo(CorrectPageInfoRequest) returns (CorrectPageInfoResponse) {}
+    //获取权益账户列表
+    rpc queryAccountPageInfo(AccountPageInfoRequest) returns (AccountPageInfoResponse) {}
+    //获取权益账户列表
+    rpc queryParamAccountPageInfo(AccountPageParamInfoRequest) returns (AccountPageInfoResponse) {}
+    //获取账户明细
+    rpc queryAccountDetail(AccountQueryRequest) returns (AccountResponse) {}
+    //批量获取账户和余额报警明细
+    rpc queryAccountAndAlarmDetail(AccountAndAlarmQueryRequest) returns (AccountAndAlarmPageInfoResponse) {}
+    //修改权益账户状态
+    rpc updateAccountOpen(UpdateAccountOpenRequest) returns (UpdateAccountOpenResponse) {}
+}

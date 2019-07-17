@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.invoice.grpc";
+option java_outer_classname = "InvoiceCommon";
+enum UserType {  
+   HLL=0;
+   USER=1;
+   SHOP=2;
+   GROUP=3;
+   STOCK=4;
+   AGENT=5;
+}
+enum TransTypeEnum {  
+   SH_TO_USER=0;
+   HLL_TO_SH=1;
+   GYS_TO_SH=2;
+   INVOICE_TRY=3;
+}
+enum Status {  
+   WAIT=0;
+   SUCCESS=1;
+   FAILURE=2;
+   ING=3;
+   PART=4;
+   NOUSE=5;
+}
+enum InvoiceTagEnum {  
+   HT=0;
+   BW=1;
+   BS=2;
+   IC=3;
+   PT=4;
+   HXGD=5;
+   YONYOU=6;
+   YONYOU_ISV=7;
+}

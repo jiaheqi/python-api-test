@@ -1,0 +1,223 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.message.sender.grpc";
+option java_outer_classname = "MessageSendData";
+import "commons.proto";
+
+message MessageBatchSendReq {  
+   // 集团ID
+   int64 groupID=2;
+   // 店铺ID
+   int64 shopID=3;
+   // 权益账户
+   string accountNo=4;
+   // 目标手机号列表,支持1000个
+   repeated string toMobiles=5;
+   // 短信内容
+   string messageContent=6;
+   // 短信业务类型
+   string serviceCode=8;
+   // 子类型标识
+   string serviceSubCode=9;
+   // 业务线来源
+   string bizSrc=10;
+   // 短信类型
+   int32 messageType=11;
+   // 发送方式单发/普通群发/个性化群发
+   int32 sendType=12;
+   // 开始发送时间，0立即发送
+   int64 startSendTime=13;
+   // 有效时长,0永久有效，单位秒
+   int32 effectiveTimeLen=14;
+   // 发送优先级,越小越高
+   int32 priorityLevel=15;
+   // 品牌ID
+   int64 brandID=16;
+   // 卡类型ID
+   int64 cardTypeID=17;
+   // 平台编码：默认hll
+   string sysCode=18;
+   // 权益账户余额不足时扣费规则，预留字段
+   string consumRule=19;
+   // 签名ID
+   string signID=20;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message MessageBatchSendRes {  
+   // 群发批次号
+   string messageKey=2;
+   // 计费条数
+   int32 chargeNum=3;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message MessageTemplateSendReq {  
+   // 集团ID
+   int64 groupID=2;
+   // 店铺ID
+   int64 shopID=3;
+   // 权益账户
+   string accountNo=4;
+   // 目标手机号
+   string toMobile=5;
+   // 短信内容
+   string messageContent=6;
+   // 短信业务类型
+   string serviceCode=7;
+   // 子类型标识
+   string serviceSubCode=8;
+   // 业务线来源
+   string bizSrc=9;
+   // 短信类型
+   int32 messageType=10;
+   // 发送方式：普通群发/个性化群发/单发
+   int32 sendType=11;
+   // 开始发送时间，0立即发送
+   int64 startSendTime=12;
+   // 有效时长,0永久有效，单位秒
+   int32 effectiveTimeLen=13;
+   // 发送优先级,越小越高
+   int32 priorityLevel=14;
+   // 模版集合
+   repeated Template properties=15;
+   // 品牌ID
+   int64 brandID=16;
+   // 卡类型ID
+   int64 cardTypeID=17;
+   // 平台编码：默认hll：哗啦啦。ddd：订多多，tc：天财
+   string sysCode=18;
+   // 国际电话区号
+   string intTelCode=19;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message Template {  
+   // 关键字key
+   string key=1;
+   // 关键字value
+   string value=2;
+}
+message MessageTemplateSendRes {  
+   // 短信key
+   string messageKey=2;
+   // 短信内容
+   string messageContent=3;
+   // 发送手机号
+   string toMobile=4;
+   // 计费条数
+   int32 chargeNum=5;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message MessageCustomSendReq {  
+   // 集团ID
+   int64 groupID=2;
+   // 店铺ID
+   int64 shopID=3;
+   // 权益账户
+   string accountNo=4;
+   // 目标手机号
+   string toMobile=5;
+   // 短信内容
+   string messageContent=6;
+   // 短信业务类型
+   string serviceCode=7;
+   // 子类型标识
+   string serviceSubCode=8;
+   // 业务线来源
+   string bizSrc=9;
+   // 短信类型
+   int32 messageType=10;
+   // 发送方式群发/单发
+   int32 sendType=11;
+   // 开始发送时间，0立即发送
+   int64 startSendTime=12;
+   // 有效时长,0永久有效，单位秒
+   int32 effectiveTimeLen=13;
+   // 发送优先级,越小越高
+   int32 priorityLevel=14;
+   // 品牌ID
+   int64 brandID=16;
+   // 卡类型ID
+   int64 cardTypeID=17;
+   // 平台编码：默认hll
+   string sysCode=18;
+   // 国际电话区号
+   string intTelCode=19;
+   // 签名ID
+   string signID=20;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message MessageCustomSendRes {  
+   // 短信key
+   string messageKey=2;
+   // 短信内容
+   string messageContent=3;
+   // 发送手机号
+   string toMobile=4;
+   // 计费条数
+   int32 chargeNum=5;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message MessageVariableBatchSendReq {  
+   // 集团ID
+   int64 groupID=2;
+   // 店铺ID
+   int64 shopID=3;
+   // 权益账户
+   string accountNo=4;
+   // 个性化模版内容：尊敬的[会员姓名] [先生/女士] [卡名称] [卡号后四位]
+   string messageContent=6;
+   // 个性化群发参数列表,支持1000个：15800000000,张先生;13800000000,李先生
+   repeated string params=7;
+   // 短信业务类型
+   string serviceCode=8;
+   // 子类型标识
+   string serviceSubCode=9;
+   // 业务线来源
+   string bizSrc=10;
+   // 短信类型
+   int32 messageType=11;
+   // 发送方式单发/普通群发/个性化群发
+   int32 sendType=12;
+   // 开始发送时间，0立即发送
+   int64 startSendTime=13;
+   // 有效时长,0永久有效，单位秒
+   int32 effectiveTimeLen=14;
+   // 发送优先级,越小越高
+   int32 priorityLevel=15;
+   // 品牌ID
+   int64 brandID=16;
+   // 卡类型ID
+   int64 cardTypeID=17;
+   // 平台编码：默认hll
+   string sysCode=18;
+   // 权益账户余额不足时扣费规则，预留字段
+   string consumRule=19;
+   // 签名ID
+   string signID=20;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message MessageVariableBatchSendRes {  
+   // 群发批次号
+   string messageKey=2;
+   // 计费条数
+   int32 chargeNum=3;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//短信发送服务
+service MessageSendService{
+    //营销普通短信群发服务
+    rpc messageBatchSend(MessageBatchSendReq) returns (MessageBatchSendRes) {}
+    //模板短信发送服务
+    rpc messageTemplateSend(MessageTemplateSendReq) returns (MessageTemplateSendRes) {}
+    //自定义短信发送服务
+    rpc messageCustomSend(MessageCustomSendReq) returns (MessageCustomSendRes) {}
+    //营销个性化短信群发服务
+    rpc messageVariableBatchSend(MessageVariableBatchSendReq) returns (MessageVariableBatchSendRes) {}
+}

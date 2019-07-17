@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.advert.grpc";
+option java_outer_classname = "AdvertData";
+import "commons.proto";
+
+message AdRouteRequest {  
+   // 广告位ID
+   string adPositionId=2;
+   // 集团id
+   string groupId=8;
+   // 店铺id
+   string shopId=9;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message AdRouteResponse {  
+   // 广告位ID
+   string adPositionId=2;
+   // 广告素材ID
+   string adMatterId=3;
+   // 广告类型
+   string advertType=4;
+   // 前导页uri
+   string frontPageUri=5;
+   // 落地页uri
+   string landPageUri=6;
+   // 是否展示广告
+   string isShow=7;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//
+service AdvertService{
+    //获取广告素材
+    rpc getAdRoute(AdRouteRequest) returns (AdRouteResponse) {}
+}

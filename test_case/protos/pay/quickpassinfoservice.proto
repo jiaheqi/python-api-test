@@ -1,0 +1,96 @@
+
+syntax = "proto3";
+
+option java_package = "com.hualala.app.quickpass.grpc";
+option java_outer_classname = "QuickPassInfoData";
+import "commons.proto";
+
+message ValidateMobileRequest {
+   // 类型SHOP：门店，SETTLE:结算主体
+   string outUserType=2;
+   // 手机号
+   string mobile=3;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message ValidateMobileResponse {
+   // 是否有效
+   bool valid=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message QueryByMobileRequest {
+   // 类型SHOP：门店，SETTLE:结算主体
+   string outUserType=2;
+   // 手机号
+   string mobile=3;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message QueryByMobileResponse {
+   // 开通闪付的信息
+   repeated QuickPassInfo quickPassInfoList=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message QuickPassInfo {
+   // 集团ID
+   int64 groupID=1;
+   // 集团名称
+   string groupName=2;
+   // 类型SHOP：门店，SETTLE:结算主体
+   string outUserType=3;
+   // 开通闪付的ID,SHOP：shopID，SETTLE:settleUnitID
+   string outUserID=4;
+   // 开通闪付的名称
+   string outUserName=5;
+   // 手机号
+   string mobile=6;
+   // 姓名
+   string name=7;
+   // 别名
+   string alias=8;
+   // 性别
+   int32 sex=9;
+}
+message OpenQuickPassRequest {
+   // 集团ID
+   int64 groupID=2;
+   // 集团名称
+   string groupName=3;
+   // 类型SHOP：门店，SETTLE:结算主体
+   string outUserType=4;
+   // 开通闪付的ID,SHOP：shopID，SETTLE:settleUnitID
+   string outUserID=5;
+   // 开通闪付的名称
+   string outUserName=6;
+   // 手机号
+   string mobile=7;
+   // 姓名
+   string name=8;
+   // 别名
+   string alias=9;
+   // 性别
+   int32 sex=10;
+   // 开通人code
+   int32 openCode=11;
+   // 开通人名称
+   int32 openName=12;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message OpenQuickPassResponse {
+   // 开通闪付的信息
+   QuickPassInfo quickPassInfo=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//闪付基本信息
+service QuickPassInfoService{
+    //验证手机号是否开通闪付
+    rpc validateMobile(ValidateMobileRequest) returns (ValidateMobileResponse) {}
+    //根据手机号查询
+    rpc queryByMobile(QueryByMobileRequest) returns (QueryByMobileResponse) {}
+    //开通闪付
+    rpc openQuickPass(OpenQuickPassRequest) returns (OpenQuickPassResponse) {}
+}

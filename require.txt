@@ -1,0 +1,13 @@
+pyqrcode
+xlrd
+requests
+grpc
+grpcio
+grpcio-tools
+
+urllib3
+chardet
+certifi
+idna
+ddt
+deepdiff

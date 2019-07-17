@@ -1,0 +1,275 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.equityaccount.grpc";
+option java_outer_classname = "TradeData";
+import "commons.proto";
+
+message TransferReq {  
+   // 出款账号
+   string fromAccountNo=2;
+   // 出款账户类型
+   string fromAccountType=3;
+   // 出款账户业务类型
+   string fromAccountBusinessCode=4;
+   // 出款账户业务子类型
+   string fromAccountSubBusinessCode=5;
+   // 出款账户集团ID
+   string fromAccountGroupID=6;
+   // 收款账号
+   string toAccountNo=7;
+   // 收款账户类型
+   string toAccountType=8;
+   // 收款账户业务类型
+   string toAccountBusinessCode=9;
+   // 收款账户业务子类型
+   string toAccountSubBusinessCode=10;
+   // 收款账户集团ID
+   string toAccountGroupID=11;
+   // 转账金额
+   string transferAmount=12;
+   // 转账单号
+   string transferOrderNo=13;
+   // 业务来源
+   string bizSrc=14;
+   // 备注信息
+   string note=15;
+   // 上游请求时间
+   string requestTime=16;
+   // 支付密码
+   string paymentPassword=17;
+   // 请求来源类型 0商户中心  1运营平台
+   int32 reqSource=18;
+   // 操作人
+   string operator=19;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message TransferRes {  
+   // 出款账号
+   string fromAccountNo=2;
+   // 收款账号
+   string toAccountNo=3;
+   // 转账金额
+   string transferAmount=4;
+   // 转账流水号
+   string tranNo=5;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message QueryWithdrawStatusReq {  
+   // 权益账户单号
+   string tranNo=2;
+   // 上游提现单号
+   string withdrawOrder=3;
+   // 业务主类型，由权益账户提供
+   string bizType=4;
+   // 业务子类型，由权益账户提供
+   string subBizType=5;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message QueryWithdrawStatusRes {  
+   // 权益账户单号
+   string tranNo=2;
+   // 上游提现单号
+   string withdrawOrder=3;
+   // 业务主类型，由权益账户提供
+   string bizType=4;
+   // 业务子类型，由权益账户提供
+   string subBizType=5;
+   // 提现状态0已提交1提现成功2提现失败
+   string withdrawStatus=6;
+   // 提现失败原因
+   string reason=7;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message WithdrawReq {  
+   // 提现单号
+   string withdrawOrder=15;
+   // 提现手续费
+   string fee=16;
+   // 银行卡号
+   string bankcard=17;
+   // 银行名称
+   string bankName=18;
+   // 微信公众号对应的openid
+   string openid=19;
+   // 扣款方式 1 内扣 2 外扣 内扣模式要求提现金额小于等于余额，外扣是提现金额加手续费小于等于余额
+   string withholdType=20;
+   // 提现文字备注.用'mock'表示测试，不走红包接口
+   string withdrawNote=21;
+   // 权益账号
+   string accountNo=2;
+   // 交易金额
+   string amount=3;
+   // 集团id
+   string groupID=4;
+   // 业务来源
+   string bizSrc=5;
+   // 业务主类型，由权益账户提供
+   string bizType=6;
+   // 业务子类型，由权益账户提供
+   string subBizType=7;
+   // 备注信息
+   string note=8;
+   // 上游请求时间201811151512333
+   string requestTime=9;
+   // 操作员
+   string operator=10;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message WithdrawRes {  
+   // 权益账户单号
+   string tranNo=2;
+   // 提现单号
+   string withdrawOrder=3;
+   // 余额
+   string balance=4;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message RefundReq {  
+   // 上游退款订单号
+   string refundOrderNo=15;
+   // 消费时权益账户返回的单号
+   string originTranNo=16;
+   // 上游消费时单号
+   string originOrderNo=17;
+   // 退款金额，不能大于原消费金额
+   string refundAmt=18;
+   // 1是退回,退款金额必须跟交易金额一致，2是部分退，金额可以不一致，但是必须消费一段时间后才可退
+   string refundType=19;
+   // 权益账号
+   string accountNo=2;
+   // 交易金额
+   string amount=3;
+   // 集团id
+   string groupID=4;
+   // 业务来源
+   string bizSrc=5;
+   // 业务主类型，由权益账户提供
+   string bizType=6;
+   // 业务子类型，由权益账户提供
+   string subBizType=7;
+   // 备注信息
+   string note=8;
+   // 上游请求时间201811151512333
+   string requestTime=9;
+   // 操作员
+   string operator=10;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message RefundRes {  
+   // 权益账户单号
+   string tranNo=2;
+   // 上游退款单号
+   string refundOrderNo=3;
+   // 消费时权益账户返回的单号
+   string originTranNo=4;
+   // 上游消费时的单号
+   string originOrderNo=5;
+   // 退款后余额
+   string balance=6;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message RechargeReq {  
+   // 充值单号
+   string rechargeNo=15;
+   // 充值类型1在线充值2人工充值
+   string rechargeType=16;
+   // 充值方式wexin,alipay,unino,redpacket,cash
+   string rechargeMethod=17;
+   // 人事线个人领取红包传002,集团充值传001
+   string accountSort=18;
+   // 实际进入账户的数量（包含赠送）
+   string accountAmt=19;
+   // 赠送金额/数量
+   string giveAmt=20;
+   // 权益账号
+   string accountNo=2;
+   // 交易金额
+   string amount=3;
+   // 集团id
+   string groupID=4;
+   // 业务来源
+   string bizSrc=5;
+   // 业务主类型，由权益账户提供
+   string bizType=6;
+   // 业务子类型，由权益账户提供
+   string subBizType=7;
+   // 备注信息
+   string note=8;
+   // 上游请求时间201811151512333
+   string requestTime=9;
+   // 操作员
+   string operator=10;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message RechargeRes {  
+   // 权益账户单号
+   string tranNo=2;
+   // 上游充值单号
+   string rechargeNo=3;
+   // 余额
+   string balance=4;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message ConsumReq {  
+   // 上游订单号
+   string orderNo=15;
+   // 折扣金额
+   string disAccountAmt=16;
+   // 实际支付金额
+   string actualAmt=17;
+   // 权益账号
+   string accountNo=2;
+   // 交易金额
+   string amount=3;
+   // 集团id
+   string groupID=4;
+   // 业务来源
+   string bizSrc=5;
+   // 业务主类型，由权益账户提供
+   string bizType=6;
+   // 业务子类型，由权益账户提供
+   string subBizType=7;
+   // 备注信息
+   string note=8;
+   // 上游请求时间201811151512333
+   string requestTime=9;
+   // 操作员
+   string operator=10;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message ConsumRes {  
+   // 权益账户订单号
+   string tranNo=2;
+   // 上游订单号
+   string orderNo=3;
+   // 余额
+   string balance=4;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//交易相关方法，充、消、退、提
+service TradeService{
+    //转账
+    rpc transfer(TransferReq) returns (TransferRes) {}
+    //提现结果查询
+    rpc queryWithdrawStatus(QueryWithdrawStatusReq) returns (QueryWithdrawStatusRes) {}
+    //提现
+    rpc withdraw(WithdrawReq) returns (WithdrawRes) {}
+    //消费退款,支持部分退款
+    rpc refund(RefundReq) returns (RefundRes) {}
+    //充值
+    rpc recharge(RechargeReq) returns (RechargeRes) {}
+    //消费
+    rpc consum(ConsumReq) returns (ConsumRes) {}
+}

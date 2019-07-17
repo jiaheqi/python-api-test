@@ -1,0 +1,12 @@
+(dp1
+S'age'
+p2
+I24
+sS'score'
+p3
+I99
+sS'name'
+p4
+S'jaiheqi'
+p5
+s.

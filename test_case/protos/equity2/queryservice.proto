@@ -1,0 +1,902 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.equityaccount.grpc";
+option java_outer_classname = "QueryData";
+import "commons.proto";
+
+message AccountInfoRequest {  
+   // 账户ID
+   string accountNo=2;
+   // 集团ID
+   string groupID=3;
+   // 账号名称
+   string accountName=4;
+   // 是否是信用账户
+   string isCredit=5;
+   // 账户类型
+   string type=6;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message AccountInfoResponse {  
+   // id
+   string id=2;
+   // 账户ID
+   string accountNo=3;
+   // 账户名称
+   string accountName=4;
+   // 账户余额
+   string balance=5;
+   // 余额单位
+   int32 balanceUnit=6;
+   // 冻结额度
+   string freezeAmt=7;
+   // 账户状态
+   int32 accountState=8;
+   // 是否启用密码
+   int32 isPassword=9;
+   // 账户类型
+   int32 type=10;
+   // 是否是信用账户
+   int32 isCredit=11;
+   // 操作类型
+   int32 action=12;
+   // 创建时间
+   string createStamp=13;
+   // 修改时间
+   string actionStamp=14;
+   // 信用额度
+   string creditAmt=15;
+   // 阀值提醒信息
+   repeated AlarmInfoModel alarmModelList=16;
+   // 集团ID
+   string groupID=17;
+   // 集团名称
+   string groupName=18;
+   // 业务类型
+   string businessCode=19;
+   // 子业务类型
+   string subBusinessCode=20;
+   // 店铺号
+   string storeCode=21;
+   // 是否是加盟店
+   int32 isFranchise=22;
+   // 是否使用推荐阀值
+   int32 useDefaultAlarm=23;
+   // 员工名称
+   string name=24;
+   // 身份证号码
+   string idCard=25;
+   // 员工手机号
+   string phone=26;
+   // 员工性别
+   int32 sex=27;
+   // 员工ID
+   string staffID=28;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message AlarmInfoModel {  
+   // 提醒阀值
+   string alarmAmt=2;
+   // 提醒手机号
+   string alarmPhone=3;
+   // 提醒次数
+   int32 alarmCount=4;
+   // 下次提醒时间
+   int64 nextAlarmTime=5;
+   // 计算类型
+   int32 alarmType=6;
+   // 提醒周期单位
+   int32 unitCycle=7;
+   // 提醒类型
+   string notifyType=8;
+}
+message AccountInfoRequestForShop {  
+   // 集团ID
+   string groupID=3;
+   // 权益账户ID
+   string accountNo=4;
+   // 账户名称
+   string accountName=5;
+   // 业务类型
+   string businessType=6;
+   // 子业务类型
+   string subBusinessType=7;
+   // 是否是信用账户
+   string isCredit=8;
+   // 账户状态
+   string accountState=9;
+   // 账户ID列表
+   string accountNos=10;
+   // 账户类型
+   string type=11;
+   // 查询分页信息
+   RequestPageHeader pageHeader=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message AccountInfoResponseForShop {  
+   // 账户信息
+   repeated AccountInfoResponse records=3;
+   // 查询分页信息
+   ResultPageHeader pageHeader=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message AccountInfoRequestForMonitor {  
+   // 业务类型
+   string subBizType=3;
+   // 集团ID
+   string groupIDs=4;
+   // 账户ID
+   string accountNo=5;
+   // 账户状态
+   string accountState=6;
+   // 查询的最小余额
+   string minBalance=7;
+   // 查询的最大余额
+   string maxBalance=8;
+   // 余额单位
+   string balanceEnum=9;
+   // 排序方式
+   string orderType=10;
+   // 是否是信用账户
+   string isCredit=11;
+   // 账户名称
+   string accountName=12;
+   // 创建账户的最早时间
+   string beginTransDate=13;
+   // 创建账户的最晚时间
+   string endTransDate=14;
+   // 账户性质 1普通账户 2信用账户 3结算账户
+   string accountNature=15;
+   // 查询分页信息
+   RequestPageHeader pageHeader=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message AccountInfoResponseForMonitor {  
+   // 账户信息
+   repeated AccountFullInfo records=3;
+   // 账户个数信息
+   repeated AccountCountModel countRecords=4;
+   // 账户总数
+   string accountTotalNum=5;
+   // 查询分页信息
+   ResultPageHeader pageHeader=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message AccountCountModel {  
+   // 业务子类型
+   string subBusinessCode=2;
+   // 账户个数
+   string countNum=3;
+}
+message AccountFullInfo {  
+   // id
+   string id=2;
+   // 账户ID
+   string accountNo=3;
+   // 账户名称
+   string accountName=4;
+   // 账户余额
+   string balance=5;
+   // 余额单位
+   int32 balanceUnit=6;
+   // 冻结额度
+   string freezeAmt=7;
+   // 账户状态
+   int32 accountState=8;
+   // 是否启用密码
+   int32 isPassword=9;
+   // 账户类型
+   int32 type=10;
+   // 是否是信用账户
+   int32 isCredit=11;
+   // 操作类型
+   int32 action=12;
+   // 创建时间
+   string createStamp=13;
+   // 修改时间
+   string actionStamp=14;
+   // 信用额度
+   string creditAmt=15;
+   // 阀值提醒信息
+   repeated AlarmInfoModel alarmModelList=16;
+   // 集团ID
+   string groupID=17;
+   // 集团名称
+   string groupName=18;
+   // 业务类型
+   string businessCode=19;
+   // 子业务类型
+   string subBusinessCode=20;
+   // 店铺号
+   string storeCode=21;
+   // 是否是加盟店
+   int32 isFranchise=22;
+   // 是否使用推荐阀值
+   int32 useDefaultAlarm=23;
+   // 员工名称
+   string name=24;
+   // 身份证号码
+   string idCard=25;
+   // 员工手机号
+   string phone=26;
+   // 员工性别
+   int32 sex=27;
+   // 员工ID
+   string staffID=28;
+   // 余额报警阀值
+   string alarmAmt=29;
+   // 余额报警手机号
+   string alarmPhone=30;
+   // 报警次数
+   string alarmCount=31;
+   // 下次报警时间
+   string nextAlarmTime=32;
+   // 1按金额2按消费次数
+   string alarmType=33;
+   // 0无 1天 2周 3月 4年
+   string unitCycle=34;
+   // 通知类型 1 短信 2 公众号 3 站内信
+   string notifyType=35;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message SubBusinessListReq {  
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message SubBusinessListResp {  
+   // 子业务类型列表
+   repeated BusinessModel records=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message BusinessModel {  
+   // 子业务名称
+   string businessName=2;
+   // 业务子类型编码
+   string subBusinessCode=3;
+   // 单位
+   string balanceUnit=4;
+   // 是否支持信用账户
+   string isCredit=5;
+   // 业务类型
+   string businessCode=6;
+   // 商户中心显示的图片
+   string shopPic=7;
+   // 冻结时商户中心的显示图片
+   string shopPicFreeze=8;
+}
+message BillListReq {  
+   // 账户ID
+   string accountNo=3;
+   // 业务类型
+   string bizType=4;
+   // 子业务类型
+   string subBizType=5;
+   // 集团ID
+   string groupID=6;
+   // 查询开始时间
+   string beginTime=7;
+   // 查询结束时间
+   string endTime=8;
+   // 交易状态
+   string billState=9;
+   // 交易类型 交易状态0交易中 1交易成功 2交易失败
+   string billType=10;
+   // 订单号
+   string tranNo=11;
+   // 查询分页信息
+   RequestPageHeader pageHeader=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message BillListResponse {  
+   // 账单详情列表
+   repeated BillDetailModel records=3;
+   // 查询分页信息
+   ResultPageHeader pageHeader=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message BillDetailModel {  
+   // id
+   string id=2;
+   // 订单号
+   string tranNo=3;
+   // 账单类型
+   string tranType=4;
+   // 账户ID
+   string accountNo=5;
+   // 账户名称
+   string accountName=6;
+   // 交易状态
+   string tranFlag=7;
+   // 账单额度
+   string amount=8;
+   // 业务来源
+   string bizSrc=9;
+   // 业务类型
+   string bizType=10;
+   // 子业务类型
+   string subBizType=11;
+   // 集团ID
+   string groupID=12;
+   // 备注
+   string note=13;
+   // 请求时间
+   string requestTime=14;
+   // 转账时收款账户ID
+   string accountNoTo=15;
+   // 转账时收款账户名称
+   string accountNameTo=16;
+   // 创建时间
+   string createStamp=17;
+   // 更新时间
+   string actionStamp=18;
+   // 操作员
+   string operator=19;
+   // 集团名称
+   string groupName=20;
+   // 转账时收款账户的集团名称
+   string groupNameTo=21;
+   // 转账时收款账户的集团ID
+   string groupIDTo=22;
+}
+message RechargeDetailReq {  
+   // 账户ID
+   string accountNo=2;
+   // 交易单号
+   string tranNo=3;
+   // 创建时间
+   string createStamp=4;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message RechargeDetailResponse {  
+   // 记录ID
+   string id=2;
+   // 充值金额
+   string amount=3;
+   // 充值上游单号
+   string rechargeNo=4;
+   // 充值单号
+   string tranNo=5;
+   // 订单状态
+   string status=6;
+   // 源单号（用于退款）
+   string originOrderNo=7;
+   // 备注
+   string note=8;
+   // 充值类型 1在线充值2人工充值
+   string rechargeType=9;
+   // 上游传过来的充值方式 wexin,alipay,unino,redpacket,cash
+   string rechargeMethod=10;
+   // 操作行为
+   string action=11;
+   // 创建时间
+   string createStamp=12;
+   // 更新时间
+   string actionStamp=13;
+   // 实际要进入账户的数量
+   string accountAmt=14;
+   // 赠送金额
+   string giveAmt=15;
+   // 子账户编号
+   string accountSort=16;
+   // 账户ID
+   string accountNo=17;
+   // 账户名称
+   string accountName=18;
+   // 交易状态0交易中 1交易成功 2交易失败
+   string tranFlag=19;
+   // 集团id
+   string groupID=20;
+   // 集团名称
+   string groupName=21;
+   // 上游请求时间
+   string requestTime=22;
+   // 1消费2充值3转账4提现5退款6充值撤销
+   string tranType=23;
+   // 业务来源
+   string bizSrc=24;
+   // 业务类型
+   string bizType=25;
+   // 子业务类型
+   string subBizType=26;
+   // 上游操作员
+   string operator=27;
+   // 账户余额
+   string balance=28;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message ConsumeDetailReq {  
+   // 账户ID
+   string accountNo=2;
+   // 交易单号
+   string tranNo=3;
+   // 创建时间
+   string createStamp=4;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message ConsumeDetailResponse {  
+   // 消费订单详情
+   ConsumeDetailModel consumeDetailModel=2;
+   // 退款订单详情
+   ConsumeDetailModel refundDetailModel=3;
+   // 退款单号
+   string refundTranNo=4;
+   // 是否有退款 0无1有
+   string isRefund=5;
+   // 消费单号
+   string consumeTranNo=6;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message ConsumeDetailModel {  
+   // 记录ID
+   string id=2;
+   // 上游单号
+   string orderNo=3;
+   // 订单金额
+   string orderAmt=4;
+   // 折扣金额
+   string disAccountAmt=5;
+   // 实际金额
+   string actualAmt=6;
+   // 订单状态
+   string status=7;
+   // 退款时的源单号
+   string originOrderNo=8;
+   // 订单号
+   string tranNo=9;
+   // 退款金额
+   string refundAmt=10;
+   // 备注
+   string note=11;
+   // 操作
+   string action=12;
+   // 创建时间
+   string createStamp=13;
+   // 操作时间
+   string actionStamp=14;
+   // 集团ID
+   string groupID=15;
+   // 集团名称
+   string groupName=16;
+   // 订单类型
+   string tranType=17;
+   // 订单状态
+   string tranFlag=18;
+   // 账号ID
+   string accountNo=19;
+   // 账号名称
+   string accountName=20;
+   // 请求时间
+   string requestTime=21;
+   // 业务来源
+   string bizSrc=22;
+   // 业务类型
+   string bizType=23;
+   // 业务子类型
+   string subBizType=24;
+   // 操作员
+   string operator=25;
+   // 账户余额
+   string balance=26;
+}
+message IncomeExpDetailReq {  
+   // 账户ID
+   string accountNo=3;
+   // 集团ID
+   string groupID=4;
+   // 业务类型
+   string bizType=5;
+   // 子业务类型
+   string subBizType=6;
+   // 查询开始时间
+   string beginTime=7;
+   // 查询结束时间
+   string endTime=8;
+   // 收支类型 1收入 2支出
+   string changeType=9;
+   // 订单号
+   string tranNo=10;
+   // 查询分页信息
+   RequestPageHeader pageHeader=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message IncomeExpDetailResponse {  
+   // 收支明细列表
+   repeated IncomeExpModel records=3;
+   // 查询分页信息
+   ResultPageHeader pageHeader=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message IncomeExpModel {  
+   // 记录ID
+   string id=3;
+   // 收支金额
+   string amt=4;
+   // 账户ID
+   string accountNo=5;
+   // 账户名称
+   string accountName=6;
+   // 账户余额
+   string balance=7;
+   // 收支类型 1收入 2支出
+   string changeType=8;
+   // 订单号
+   string tranNo=9;
+   // 备注
+   string note=10;
+   // 操作
+   string action=11;
+   // 创建时间
+   string createStamp=12;
+   // 操作时间
+   string actionStamp=13;
+   // 集团ID
+   string groupID=14;
+   // 集团名称
+   string groupName=15;
+   // 请求时间
+   string requestTime=16;
+   // 操作员
+   string operator=17;
+}
+message SettleListReq {  
+   // 权益账户ID
+   string accountNo=3;
+   // 集团ID
+   string groupID=4;
+   // 业务类型
+   string bizType=5;
+   // 子业务类型
+   string subBizType=6;
+   // 清分单号
+   string distributionNo=7;
+   // 查询分页信息
+   RequestPageHeader pageHeader=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message SettleListResponse {  
+   // 清分记录详情列表
+   repeated DayDetailModel records=3;
+   // 查询分页信息
+   ResultPageHeader pageHeader=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message DayDetailModel {  
+   // 集团ID
+   string groupID=3;
+   // 账户ID
+   string accountNo=4;
+   // 交易额
+   string consumAmt=5;
+   // 上游订单号
+   string thirdOrderNo=6;
+   // 业务类型
+   string bizType=7;
+   // 子业务类型
+   string subBizType=8;
+   // 业务来源
+   string bizSrc=9;
+   // 备注
+   string note=10;
+   // 上游请求时间
+   string requestTime=11;
+   // 操作员
+   string operator=12;
+   // 创建时间
+   string createStamp=13;
+   // 更新时间
+   string actionStamp=14;
+   // 流水号
+   string tranNo=15;
+   // 清分单号
+   string distributionNo=16;
+   // 0未处理1已成功
+   string dealStatus=17;
+   // 操作行为
+   string action=18;
+   // 1消费2退款
+   string tranType=19;
+   // 可退金额
+   string refundAmt=20;
+   // 源单号
+   string originOrderNo=21;
+}
+message SettleDetailReq {  
+   // 集团ID
+   string groupID=2;
+   // 账户ID
+   string accountNo=3;
+   // 交易单号
+   string tranNo=4;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message SettleDetailResponse {  
+   // 清算中的消费明细
+   DayDetailModel consumeDayDetailModel=2;
+   // 清算中的退款明细
+   DayDetailModel refundDayDetailModel=3;
+   // 退款单号
+   string refundTranNo=4;
+   // 是否有退款 0无1有
+   string isRefund=5;
+   // 消费单号
+   string consumeTranNo=6;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message SettleListReqByTranNo {  
+   // 权益账户ID
+   string accountNo=3;
+   // 集团ID
+   string groupID=4;
+   // 业务类型
+   string bizType=5;
+   // 子业务类型
+   string subBizType=6;
+   // 清分单号
+   string distributionNo=7;
+   // 账单流水号
+   string tranNo=8;
+   // 交易类型 1消费2退款
+   string tranType=9;
+   // 查询分页信息
+   RequestPageHeader pageHeader=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message BillListReqForMonitor {  
+   // 账户ID
+   string accountNo=3;
+   // 业务类型
+   string bizType=4;
+   // 子业务类型
+   string subBizType=5;
+   // 集团ID
+   string groupID=6;
+   // 查询开始时间
+   string beginTime=7;
+   // 查询结束时间
+   string endTime=8;
+   // 交易状态
+   string billState=9;
+   // 交易类型
+   string billType=10;
+   // 订单号
+   string tranNo=11;
+   // 账户名称
+   string accountName=12;
+   // 查询分页信息
+   RequestPageHeader pageHeader=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message BillListResponseForMonitor {  
+   // 账单详情列表
+   repeated BillDetailModel records=3;
+   repeated TotalAmountModel amountRecords=4;
+   // 查询分页信息
+   ResultPageHeader pageHeader=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message TotalAmountModel {  
+   // 账单类型  1消费2充值3转账4提现5退款6充值撤销（7和8都叫结算记录）7日结8固定周期结算
+   string tranType=3;
+   // 额度
+   string totalAmount=4;
+}
+message RechargeDetailReqForMonitor {  
+   // 账户ID
+   string accountNo=2;
+   // 交易单号
+   string tranNo=3;
+   // 创建时间
+   string createStamp=4;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message RechargeDetailResponseForMonitor {  
+   // 记录ID
+   string id=2;
+   // 充值金额
+   string amount=3;
+   // 充值上游单号
+   string rechargeNo=4;
+   // 充值单号
+   string tranNo=5;
+   // 订单状态
+   string status=6;
+   // 源单号（用于退款）
+   string originOrderNo=7;
+   // 备注
+   string note=8;
+   // 充值类型 1在线充值2人工充值
+   string rechargeType=9;
+   // 上游传过来的充值方式 wexin,alipay,unino,redpacket,cash
+   string rechargeMethod=10;
+   // 操作行为
+   string action=11;
+   // 创建时间
+   string createStamp=12;
+   // 更新时间
+   string actionStamp=13;
+   // 实际要进入账户的数量
+   string accountAmt=14;
+   // 赠送金额
+   string giveAmt=15;
+   // 子账户编号
+   string accountSort=16;
+   // 账户ID
+   string accountNo=17;
+   // 账户名称
+   string accountName=18;
+   // 交易状态0交易中 1交易成功 2交易失败
+   string tranFlag=19;
+   // 集团id
+   string groupID=20;
+   // 集团名称
+   string groupName=21;
+   // 上游请求时间
+   string requestTime=22;
+   // 1消费2充值3转账4提现5退款6充值撤销
+   string tranType=23;
+   // 业务来源
+   string bizSrc=24;
+   // 业务类型
+   string bizType=25;
+   // 子业务类型
+   string subBizType=26;
+   // 上游操作员
+   string operator=27;
+   // 账户余额
+   string balance=28;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message ConsumeDetailReqForMonitor {  
+   // 账户ID
+   string accountNo=2;
+   // 交易单号
+   string tranNo=3;
+   // 创建时间
+   string createStamp=4;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message ConsumeDetailResponseForMonitor {  
+   // 消费订单详情
+   ConsumeDetailModel consumeDetailModel=2;
+   // 退款订单详情
+   ConsumeDetailModel refundDetailModel=3;
+   // 退款单号
+   string refundTranNo=4;
+   // 是否有退款 0无1有
+   string isRefund=5;
+   // 消费单号
+   string consumeTranNo=6;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message SettleListReqForMonitor {  
+   // 权益账户ID
+   string accountNo=3;
+   // 集团ID
+   string groupID=4;
+   // 业务类型
+   string bizType=5;
+   // 子业务类型
+   string subBizType=6;
+   // 清分单号
+   string distributionNo=7;
+   // 查询分页信息
+   RequestPageHeader pageHeader=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message SettleListResponseForMonitor {  
+   // 清分记录详情列表
+   repeated DayDetailModel records=3;
+   // 查询分页信息
+   ResultPageHeader pageHeader=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message SettleDetailReqForMonitor {  
+   // 集团ID
+   string groupID=2;
+   // 账户ID
+   string accountNo=3;
+   // 交易单号
+   string tranNo=4;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message SettleDetailResponseForMonitor {  
+   // 清算中的消费明细
+   DayDetailModel consumeDayDetailModel=2;
+   // 清算中的退款明细
+   DayDetailModel refundDayDetailModel=3;
+   // 退款单号
+   string refundTranNo=4;
+   // 是否有退款 0无1有
+   string isRefund=5;
+   // 消费单号
+   string consumeTranNo=6;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message ArrearageAccountReq {  
+   // 集团ID
+   string groupID=3;
+   // 业务类型
+   string businessType=4;
+   // 子业务类型
+   string subBusinessType=5;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message ArrearageAccountRes {  
+   // 是否存在欠费账户：Y-存在；N-不存在
+   string arrearageMark=3;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+//权益账户查询服务
+service QueryService{
+    //查询账户详情
+    rpc queryAccountDetail(AccountInfoRequest) returns (AccountInfoResponse) {}
+    //商户中心查询账户信息列表
+    rpc queryAccountDetailForShop(AccountInfoRequestForShop) returns (AccountInfoResponseForShop) {}
+    //monitor查询账户信息列表
+    rpc queryAccountDetailForMonitor(AccountInfoRequestForMonitor) returns (AccountInfoResponseForMonitor) {}
+    //获取业务子类型列表
+    rpc queryBusinessList(SubBusinessListReq) returns (SubBusinessListResp) {}
+    //商户中心查询交易账单列表
+    rpc queryBillListForShop(BillListReq) returns (BillListResponse) {}
+    //查看详情-充值
+    rpc queryRechargeDetail(RechargeDetailReq) returns (RechargeDetailResponse) {}
+    //查看详情-消费
+    rpc queryConsumeDetail(ConsumeDetailReq) returns (ConsumeDetailResponse) {}
+    //查看详情-退款
+    rpc queryRefundDetail(ConsumeDetailReq) returns (ConsumeDetailResponse) {}
+    //查询收支明细
+    rpc queryIncomeExpDetail(IncomeExpDetailReq) returns (IncomeExpDetailResponse) {}
+    //查询结算信息列表
+    rpc querySettleList(SettleListReq) returns (SettleListResponse) {}
+    //查询结算详情
+    rpc querySettleDetail(SettleDetailReq) returns (SettleDetailResponse) {}
+    //查询结算信息列表
+    rpc querySettleListByTranNo(SettleListReqByTranNo) returns (SettleListResponse) {}
+    //monitor查询流水列表
+    rpc queryBillListForMonitor(BillListReqForMonitor) returns (BillListResponseForMonitor) {}
+    //monitor查看充值详情
+    rpc queryRechargeDetailForMonitor(RechargeDetailReqForMonitor) returns (RechargeDetailResponseForMonitor) {}
+    //monitor查看消费详情
+    rpc queryConsumeDetailForMonitor(ConsumeDetailReqForMonitor) returns (ConsumeDetailResponseForMonitor) {}
+    //monitor查看退款详情
+    rpc queryRefundDetailForMonitor(ConsumeDetailReqForMonitor) returns (ConsumeDetailResponseForMonitor) {}
+    //monitor查看结算详情列表
+    rpc querySettleListForMonitor(SettleListReqForMonitor) returns (SettleListResponseForMonitor) {}
+    //monitor查询结算详情
+    rpc querySettleDetailForMonitor(SettleDetailReqForMonitor) returns (SettleDetailResponseForMonitor) {}
+    //是否存在欠费账户-按集团按类型
+    rpc queryArrearageAccount(ArrearageAccountReq) returns (ArrearageAccountRes) {}
+}

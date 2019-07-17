@@ -1,0 +1,95 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.message.grpc";
+option java_outer_classname = "SemSMSQueueData";
+import "commons.proto";
+
+message SmsQueueReq {  
+   int32 groupID=2;
+   int32 settleID=3;
+   int32 shopID=4;
+   string shopName=5;
+   int32 smsType=6;
+   string startSendTime=7;
+   string toMobile=8;
+   string smsContent=9;
+   int32 sendPriorityLevel=10;
+   int32 effectiveTimeLen=11;
+   int32 sendCount=12;
+   int64 brandID=13;
+   int64 cardTypeID=14;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message ResInfo {  
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message QuerySmsQueueAndHisReq {  
+   // 第几页
+   int32 pageNo=2;
+   // 每页记录数
+   int32 pageSize=3;
+   // 查询参数
+   repeated KeyVal params=4;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message KeyVal {  
+   // 参数名
+   string key=1;
+   // 参数值
+   string value=2;
+}
+message QuerySmsQueueAndHisRes {  
+   // 查询参数
+   repeated SmsSMSQueue queueList=3;
+   // 查询分页信息
+   ResultPageHeader pageHeader=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message SmsSMSQueue {  
+   // 记录ID
+   int32 itemID=1;
+   // 防重复签名
+   string signMD5=2;
+   // 集团ID
+   int32 groupID=3;
+   // 结算主体ID
+   int32 settleID=4;
+   // 店铺ID
+   int32 shopID=5;
+   // 店铺名称
+   string shopName=6;
+   // 短信类型
+   int32 smsType=7;
+   // 开始发送时间（定时发送短信有效）默认为0立即发送
+   int64 startSendTime=8;
+   // 接收短信的手机号码
+   string toMobile=9;
+   // 短信内容
+   string smsContent=10;
+   // 发送优先级:数值越小，优先级越高
+   int32 sendPriorityLevel=11;
+   // 提交后的有效期（分钟）0表示永不过期
+   int32 effectiveTimeLen=12;
+   // 已发送次数
+   int32 sendCount=13;
+   // 是否已发送成功
+   int32 isSendSucceed=14;
+   // 接口返回信息
+   string interfaceReInfo=15;
+   // 最后发送时间
+   int64 lastSendTime=16;
+   // 记录状态
+   int32 action=17;
+   // 记录更改时间
+   int64 actionTime=18;
+   // 记录创建时间
+   int64 createTime=19;
+}
+service SemSMSQueueService{
+    rpc sendMessage(SmsQueueReq) returns (ResInfo) {}
+    rpc queryQueueAndHis(QuerySmsQueueAndHisReq) returns (QuerySmsQueueAndHisRes) {}
+}

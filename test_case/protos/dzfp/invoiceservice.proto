@@ -1,0 +1,712 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.invoice.grpc";
+option java_outer_classname = "InvoiceData";
+import "commons.proto";
+import "invoicecommons.proto";
+
+message MakeReqData {  
+   // 集团ID
+   int64 groupID=2;
+   // 店铺ID
+   int64 taxShopID=3;
+   // 店铺名称
+   string taxShopName=4;
+   // 开票类型，默认为0开普票
+   string invoideType=5;
+   // 业务类型，默认为商户向用户开票
+   TransTypeEnum transTypeEnum=6;
+   // 接口类型，默认为开票，生成二维码
+   InterfaceTypeEnum interfaceTypeEnum=7;
+   // 订单号
+   string orderKey=8;
+   // 门店订单号
+   string shopOrderKey=9;
+   // 开票金额
+   double orderTotal=10;
+   // 下单时间
+   int64 orderTime=11;
+   // 发票抬头
+   string buyerTitle=12;
+   // 购方手机号
+   string buyerTel=13;
+   // 购方邮箱
+   string buyerEmail=14;
+   // 开票项目
+   string taxItemName=15;
+   // 开票人
+   string defaultOperator=16;
+   // 纳税主体ID
+   int64 taxUnitID=17;
+   // 持有人类型
+   UserType holderUserType=18;
+   // 持有人关联代码
+   string holderExternalCode=19;
+   // 持有人关联名称
+   string holderExternalName=20;
+   // 开票方
+   UserType taxUserType=21;
+   // 开票方关联代码
+   string taxExternalCode=22;
+   // 开票方关联名称
+   string taxExternalName=23;
+   // 开票项目列表
+   repeated InvoiceItem invoiceItemList=24;
+   // 收款人
+   string orderReceipter=25;
+   // 购买方纳税人识别号
+   string buyerTaxCode=26;
+   // 购买方地址
+   string buyerAddress=27;
+   // 购方开户行
+   string buyerBankName=28;
+   // 购买方银行卡号
+   string buyerBankAccountNo=29;
+   // 购买方电话
+   string buyerPhone=30;
+   // 开票结果通知地址
+   string notifyExchange=31;
+   // 开票通知路由
+   string notifyRoutingKey=32;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+enum InterfaceTypeEnum {  
+   MAKE_INVOICE=0;
+   WECHAT_MAKE_QRCODE=1;
+}
+message InvoiceItem {  
+   int64 itemID=1;
+   int64 invoicID=2;
+   // 消费内容
+   string itemName=3;
+   // 可开票金额
+   string itemAmount=4;
+   // 税率
+   string taxRate=5;
+   // 商品编码
+   string itemCode=6;
+   // 项目单位
+   string itemUnitName=7;
+   // 规格型号
+   string itemType=8;
+   // 单价
+   string itemPrice=9;
+   // 数量
+   string itemCount=10;
+   // 项目备注
+   string remark=11;
+}
+message MakeResData {  
+   // 订单号
+   string orderKey=2;
+   // 门店订单号
+   string shopOrderKey=3;
+   // 开票金额
+   string orderTotal=4;
+   // 发票订单号
+   string taxOrderNo=5;
+   // 开票二维码
+   string qrCodeUrl=6;
+   // 开票总张数
+   int32 invoiceCount=7;
+   // 开票已成功总张数
+   int32 successInvoiceCount=8;
+   repeated InterfaceDetail records=9;
+   // 开票状态
+   int32 invoiceStatus=10;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message InterfaceDetail {  
+   // 发票ID
+   int64 itemID=1;
+   // 主表ID
+   int64 invoiceID=2;
+   // 订单发票UUID
+   string taxOrderNo=3;
+   // 订单号
+   string orderKey=4;
+   // 门店账单号
+   string shopOrderKey=5;
+   // 店铺ID
+   int64 taxShopID=6;
+   // 店铺名称
+   string taxShopName=7;
+   // 销售方
+   string taxUnitShortName=8;
+   // 销售方识别号
+   string taxUnitCode=9;
+   // 销售方地址
+   string taxUnitAddress=10;
+   // 销售方电话
+   string taxUnitTel=11;
+   // 销售方银行卡号
+   string taxUnitBankAccountNo=12;
+   // 抬头
+   string buyerTitle=13;
+   // 购买方邮箱
+   string buyerEmail=14;
+   // 购买方电话
+   string buyerTel=15;
+   // 发票金额
+   string invoiceTotal=16;
+   // 免税额
+   string taxFreeTotal=17;
+   // 总税额
+   string taxTotal=18;
+   // 开票日期
+   int64 invoiceDate=19;
+   // 发票代码
+   string invoiceCode=20;
+   // 发票号码
+   string invoiceNo=21;
+   // 校验码
+   string invoiceCheckCode=22;
+   // 发票状态
+   int32 invoiceStatus=23;
+   // pdf地址
+   string taxDocUrl=24;
+   // 发票图片地址
+   string taxImgUrl=25;
+   // 响应码
+   string responseCode=26;
+   // 返回信息
+   string responseReturnMsg=27;
+   // 开票项目
+   repeated InvoiceItem invoiceItemList=28;
+   // 购买方纳税人识别号
+   string buyerTaxCode=29;
+   // 购买方地址
+   string buyerAddress=30;
+   // 购方开户行
+   string buyerBankName=31;
+   // 购买方银行卡号
+   string buyerBankAccountNo=32;
+   // 购买方电话
+   string buyerPhone=33;
+   // 收款人
+   string orderReceipter=34;
+   // 应用ID
+   string appID=35;
+   // 发票备注
+   string remark=36;
+   // 开票人
+   string taxOperator=37;
+   // 是否已插卡
+   bool inCardPack=38;
+   // 微信appID
+   string wechatAppID=39;
+   // 模板ID
+   string wechatTemplateID=40;
+   // 微信卡券code
+   string wechatCardCode=41;
+   // 请求流水号
+   string requestMsgCode=42;
+}
+message QueryReqData {  
+   // 单张发票ID
+   int64 itemID=2;
+   // 单张发票taxOrderNo
+   string taxOrderNo=3;
+   // 订单key
+   string shopOrderKey=4;
+   // 开票接口请求流水号
+   string requestMsgCode=5;
+   // 发票号码
+   string invoiceNo=6;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message QueryResData {  
+   // 发票详情
+   InterfaceDetail interfaceDetail=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message InvoiceListReq {  
+   // 开票请求流水号
+   string requestMsgCode=3;
+   // 集团ID
+   int64 groupID=4;
+   // 店铺ID
+   int64 taxShopID=5;
+   // userID
+   int64 userID=6;
+   // 发票ID
+   int64 invoiceID=7;
+   // 订单号
+   string orderKey=8;
+   // 店铺账单号
+   string shopOrderKey=9;
+   // 发票状态
+   int32 invoiceStatus=10;
+   // 查询分页信息
+   RequestPageHeader pageHeader=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message InvoiceListRes {  
+   // 发票列表
+   repeated InterfaceDetail interfaceDetails=3;
+   // 查询分页信息
+   ResultPageHeader pageHeader=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message PreMakeInvoiceReq {  
+   // 集团ID
+   int64 groupID=2;
+   // 店铺ID
+   int64 taxShopID=3;
+   // 店铺名称
+   string taxShopName=4;
+   // 订单号
+   string orderKey=8;
+   // 门店订单号
+   string shopOrderKey=9;
+   // 开票金额
+   string orderTotal=10;
+   // 订单时间
+   int64 orderTime=11;
+   // 发票订单号
+   string taxOrderNo=12;
+   // 二维码url
+   string qrCodeUrl=13;
+   // 开票人
+   string orderOperator=14;
+   // 收款人
+   string orderReceipter=15;
+   // 复核人
+   string orderReviewer=16;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message PreMakeInvoiceRes {  
+   // 发票订单号
+   string taxOrderNo=2;
+   // 二维码url
+   string qrCodeUrl=3;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message RedInvoiceReqData {  
+   // 集团ID
+   int64 groupID=2;
+   // 订单号
+   string orderKey=3;
+   // 门店订单号
+   string shopOrderKey=4;
+   // 开票方
+   UserType taxUserType=5;
+   // 开票方关联代码
+   string taxExternalCode=6;
+   // 开票方关联名称
+   string taxExternalName=7;
+   // 红冲原因
+   string redReason=8;
+   // 开票人
+   string defaultOperator=9;
+   // 开票结果通知地址
+   string notifyExchange=10;
+   // 开票通知路由
+   string notifyRoutingKey=11;
+   // 发票订单号
+   string taxOrderNo=12;
+   // 发票流水号
+   string requestMsgCode=13;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message RedInvoiceResData {  
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message CheckMadeInvoiceReqData {  
+   // 发票订单号列表
+   repeated string taxOrderNoList=2;
+   // 店铺ID
+   int64 taxShopID=3;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message CheckMadeInvoiceResData {  
+   // 发票订单号列表
+   repeated string madeTaxOrderNoList=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message UserMakeInvoiceReqData {  
+   // 用户ID
+   int64 userID=2;
+   // 集团ID
+   int64 groupID=3;
+   // 店铺ID
+   int64 taxShopID=4;
+   // 店铺名称
+   string taxShopName=5;
+   // 开票类型，默认为0开普票
+   string invoideType=6;
+   // 业务类型，默认为商户向用户开票
+   TransTypeEnum transTypeEnum=7;
+   // 发票订单号
+   string taxOrderNo=8;
+   // 订单号
+   string orderKey=9;
+   // 门店订单号
+   string shopOrderKey=10;
+   // 开票金额
+   string invoiceTotal=11;
+   // 下单时间
+   int64 orderTime=12;
+   // 发票抬头
+   string buyerTitle=13;
+   // 购方手机号
+   string buyerTel=14;
+   // 购方邮箱
+   string buyerEmail=15;
+   // 开票项目
+   string taxItemName=16;
+   // 开票人
+   string orderOperator=17;
+   // 纳税主体ID
+   int64 taxUnitID=18;
+   // 持有人类型
+   UserType holderUserType=19;
+   // 持有人关联代码
+   string holderExternalCode=20;
+   // 持有人关联名称
+   string holderExternalName=21;
+   // 开票方
+   UserType taxUserType=22;
+   // 开票方关联代码
+   string taxExternalCode=23;
+   // 开票方关联名称
+   string taxExternalName=24;
+   // 开票项目列表
+   repeated InvoiceItem invoiceItemList=25;
+   // 收款人
+   string orderReceipter=26;
+   // 购买方纳税人识别号
+   string buyerTaxCode=27;
+   // 购买方地址
+   string buyerAddress=28;
+   // 购方开户行
+   string buyerBankName=29;
+   // 购买方银行卡号
+   string buyerBankAccountNo=30;
+   // 购买方电话
+   string buyerPhone=31;
+   // 开票结果通知地址
+   string notifyExchange=32;
+   // 开票通知路由
+   string notifyRoutingKey=33;
+   // 开票人对应的微信公众号ID
+   string userOpenID=34;
+   // 复核人
+   string orderReviewer=35;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message UserMakeInvoiceResData {  
+   // 发票订单号
+   int64 taxOrderNo=2;
+   // 订单号
+   string orderKey=3;
+   // 门店订单号
+   string shopOrderKey=4;
+   // 开票金额
+   string invoiceTotal=5;
+   // 开票总张数
+   int32 invoiceCount=6;
+   // 开票已成功总张数
+   int32 successInvoiceCount=7;
+   // 开票已成功总张数
+   int32 invoiceStatus=8;
+   repeated InterfaceDetail records=9;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message UpdateInCardPackReqData {  
+   // itemID
+   int64 itemID=2;
+   // 是否已插卡
+   bool inCardPack=3;
+   // 微信卡券code
+   string wechatCardCode=4;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message UpdateInCardPackResData {  
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message WechatMakeReqData {  
+   // 发票单号
+   string taxOrderNo=2;
+   // 用户ID
+   int64 userID=3;
+   // 发票抬头
+   string buyerTitle=4;
+   // 购方手机号
+   string buyerTel=5;
+   // 购方邮箱
+   string buyerEmail=6;
+   // 订单号
+   string orderKey=7;
+   // 门店订单号
+   string shopOrderKey=8;
+   // 开票人对应的微信公众号ID
+   string userOpenID=9;
+   // 持有人类型
+   UserType holderUserType=13;
+   // 持有人关联代码
+   string holderExternalCode=14;
+   // 持有人关联名称
+   string holderExternalName=15;
+   // 购买方纳税人识别号
+   string buyerTaxCode=16;
+   // 购买方地址
+   string buyerAddress=17;
+   // 购方开户行
+   string buyerBankName=18;
+   // 购买方银行卡号
+   string buyerBankAccountNo=19;
+   // 购买方电话
+   string buyerPhone=20;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message WechatMakeResData {  
+   // 订单号
+   string orderKey=2;
+   // 门店订单号
+   string shopOrderKey=3;
+   // 开票金额
+   string orderTotal=4;
+   // 发票订单号
+   int64 taxOrderNo=5;
+   // 开票二维码
+   string qrCodeUrl=6;
+   // 开票总张数
+   int32 invoiceCount=7;
+   // 开票已成功总张数
+   int32 successInvoiceCount=8;
+   repeated InterfaceDetail records=9;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message InvoiceQueryStatusReq {  
+   // 发票订单号
+   string taxOrderNo=2;
+   // 订单号
+   string orderKey=3;
+   // 店铺账单号
+   string shopOrderKey=4;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message InvoiceQueryStatusRes {  
+   // 发票订单号
+   string taxOrderNo=2;
+   // 订单号
+   string orderKey=3;
+   // 店铺账单号
+   string shopOrderKey=4;
+   // 开票总张数
+   int32 invoiceCount=5;
+   // 开票已成功总张数
+   int32 successInvoiceCount=6;
+   // 开票总金额
+   string orderTotal=7;
+   // 开票项目
+   string taxItemName=8;
+   // 开票状态
+   int32 invoiceStatus=10;
+   repeated InterfaceDetail records=9;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message InvoiceLightListReq {  
+   // 开票时间-起（含）
+   int64 startTime=3;
+   // 开票时间-止（含）
+   int64 endTime=4;
+   // 店铺ID
+   int64 taxShopID=5;
+   // 纳税主体ID
+   int64 taxUnitID=6;
+   // 发票状态
+   int32 invoiceStatus=7;
+   // 查询分页信息
+   RequestPageHeader pageHeader=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message InvoiceLightListRes {  
+   // 发票简略列表
+   repeated LightInterfaceDetail invoiceLightList=3;
+   // 查询分页信息
+   ResultPageHeader pageHeader=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message LightInterfaceDetail {  
+   // 此发票记录的ID
+   int64 itemID=1;
+   // 门店账单号
+   string shopOrderKey=2;
+   // 账单号
+   string orderKey=3;
+   // 开票时间
+   int64 requestTime=4;
+   // 店铺ID
+   int64 taxShopID=5;
+   // 发票金额
+   string invoiceTotal=6;
+   // 发票状态
+   int32 invoiceStatus=7;
+   // 发票编号
+   string taxOrderNo=8;
+   // 发票代码
+   string invoiceCode=9;
+   // 发票号码
+   string invoiceNo=10;
+}
+message InvoiceSuccessListReq {  
+   // 开票时间-起（含）
+   int64 startTime=3;
+   // 开票时间-止（含）
+   int64 endTime=4;
+   // 集团ID
+   int64 groupID=5;
+   // 店铺ID
+   int64 shopID=6;
+   // 发票号码
+   string invoiceNo=7;
+   // 发票代码
+   string invoiceCode=8;
+   // 开票类型（0蓝1红）
+   int32 makeType=9;
+   // 页码
+   int32 httpPageNo=10;
+   // 页大小
+   int32 httpPageSize=11;
+   // 查询分页信息
+   RequestPageHeader pageHeader=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message InvoiceSuccessListRes {  
+   // 已开具发票列表
+   repeated SuccessInterfaceDetail records=3;
+   // 查询分页信息
+   ResultPageHeader pageHeader=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message SuccessInterfaceDetail {  
+   // 此发票记录的ID
+   int64 itemID=1;
+   // 店铺订单号
+   string shopOrderKey=2;
+   // 店铺ID
+   int64 taxShopID=3;
+   // 用户ID
+   int64 userID=4;
+   // 店铺名
+   string taxShopName=5;
+   // 开票使用的地址
+   string taxUnitAddress=6;
+   // 开票使用的电话
+   string taxUnitTel=7;
+   // 开票使用的银行账号
+   string taxUnitBankAccountNo=8;
+   // 税率
+   string taxRate=9;
+   // 商品项目名
+   string taxItemName=10;
+   // 操作人
+   string taxOperator=11;
+   // 审核人
+   string taxReviewer=12;
+   // 收款人
+   string orderReceipter=13;
+   // 买方抬头
+   string buyerTitle=14;
+   // 买方纳税人识别号
+   string buyerTaxCode=15;
+   // 买方地址
+   string buyerAddress=16;
+   // 买方省份
+   string buyerProvince=17;
+   // 买方电话
+   string buyerTel=18;
+   // 买方邮箱
+   string buyerEmail=19;
+   // 购货方类型（01，企业，02，机关，03，个人，04，其它）
+   string buyerType=20;
+   // 购买方银行账号
+   string buyerBankAccountNo=21;
+   // 购买方手机
+   string buyerPhone=22;
+   // 购买方开户行
+   string buyerBankName=23;
+   // 发票总金额
+   string invoiceTotal=24;
+   // 免税商品总金额
+   string taxFreeTotal=25;
+   // 缴税总额
+   string taxTotal=26;
+   // 开票日期
+   int64 invoiceDate=27;
+   // 发票代码
+   string invoiceCode=28;
+   // 发票号码
+   string invoiceNo=29;
+   // 发票校验码
+   string invoiceCheckCode=30;
+   // 开票类型 0 蓝字 1 红字
+   int32 makeType=31;
+   // 发票状态（0,未开;1,已提交;2,已开;3,已红冲;4,作废)
+   int32 invoiceStatus=32;
+   // 电子发票文档下载地址
+   string taxDocUrl=33;
+   // 电子发票文档图片地址
+   string taxImgUrl=34;
+   // 发票订单号
+   string taxOrderNo=35;
+   // 请求流水号
+   string requestMsgCode=36;
+}
+//
+service InvoiceService{
+    //商户向用户开具发票
+    rpc makeInvoice(MakeReqData) returns (MakeResData) {}
+    //发票详情查询
+    rpc queryInvoice(QueryReqData) returns (QueryResData) {}
+    //发票列表查询
+    rpc queryInvoiceList(InvoiceListReq) returns (InvoiceListRes) {}
+    //微信预开票接口
+    rpc preMakeInvoice(PreMakeInvoiceReq) returns (PreMakeInvoiceRes) {}
+    //开具红冲发票
+    rpc makeRedInvoice(RedInvoiceReqData) returns (RedInvoiceResData) {}
+    //查找指定订单列表已开具列表
+    rpc checkMadeInvoice(CheckMadeInvoiceReqData) returns (CheckMadeInvoiceResData) {}
+    //用户通用开票
+    rpc userMakeInvoice(UserMakeInvoiceReqData) returns (UserMakeInvoiceResData) {}
+    //更新插卡状态
+    rpc updateInCardPack(UpdateInCardPackReqData) returns (UpdateInCardPackResData) {}
+    //发票信息(部分)
+    rpc queryInvoiceLst(QueryReqData) returns (InvoiceListRes) {}
+    //微信开具发票
+    rpc confirmMakeInvoice(WechatMakeReqData) returns (WechatMakeResData) {}
+    //微信端发票状态查询
+    rpc queryInvoiceStatus(InvoiceQueryStatusReq) returns (InvoiceQueryStatusRes) {}
+    //查询发票简略列表
+    rpc queryInvoiceLightList(InvoiceLightListReq) returns (InvoiceLightListRes) {}
+    //查询已开具发票列表
+    rpc queryInvoiceSuccessList(InvoiceSuccessListReq) returns (InvoiceSuccessListRes) {}
+    //根据taxOrderNo查询发票详情
+    rpc queryInvoiceDetail(QueryReqData) returns (QueryResData) {}
+}

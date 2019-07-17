@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.message.channel.grpc";
+option java_outer_classname = "MessageUserSignData";
+import "commons.proto";
+
+message QryMessageUserSignReq {  
+   // 集团ID
+   int64 groupID=2;
+   // 品牌ID
+   int64 brandID=3;
+   // 店铺ID
+   int64 shopID=4;
+   // 卡类型ID
+   int64 cardTypeID=5;
+   // 平台编码：默认hll
+   string sysCode=6;
+   // 短信类型
+   int32 messageType=7;
+   // 发送方式:普通群发/个性化群发/单发
+   int32 sendType=8;
+   // 国际电话区号
+   string intTelCode=9;
+   // 签名ID
+   string signID=10;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message QryMessageUserSignRes {  
+   // 短信签名:单发默认哗啦啦，群发默认互联网餐厅
+   string signName=2;
+   // 签名多渠道报备号
+   string channelSignID=3;
+   // 国际短信单价
+   string price=4;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message QryMsgUserSignReq {  
+   // 集团ID
+   string groupID=3;
+   // 短信类型，  4 营销短信
+   int32 messageType=7;
+   // 查询分页信息
+   RequestPageHeader pageHeader=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message QryMsgUserSignListRes {  
+   // 签名列表
+   repeated UserSignModel records=3;
+   // 集团ID
+   string groupID=4;
+   // 查询分页信息
+   ResultPageHeader pageHeader=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message UserSignModel {  
+   // 签名ID
+   string signID=2;
+   // 签名名称
+   string signName=3;
+}
+//短信自有签名服务
+service MessageUserSignService{
+    //查询短信自有签名
+    rpc qryMessageUserSign(QryMessageUserSignReq) returns (QryMessageUserSignRes) {}
+    //查询短信签名列表
+    rpc qryMsgUserSignList(QryMsgUserSignReq) returns (QryMsgUserSignListRes) {}
+}

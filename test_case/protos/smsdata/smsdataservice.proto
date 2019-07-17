@@ -1,0 +1,245 @@
+syntax = "proto3";
+
+option java_package = "com.hualala.app.dataquery.grpc";
+option java_outer_classname = "SMSDataData";
+import "commons.proto";
+
+message SMSDataQuery {  
+   // 开始时间
+   string startDate=2;
+   // 结束时间
+   string endDate=3;
+   // 集团id
+   string groupId=4;
+   // 第几页
+   int32 pageNo=5;
+   // 每页条数
+   int32 pageSize=6;
+   // 手机号码
+   string toMobile=7;
+   // 店铺名称
+   string shopName=8;
+   // 发送状态(发送中、发送成功、发送失败)
+   int32 sedType=9;
+   // 权益账户账号
+   string accountNo=10;
+   // 订单账号
+   string shopIds=11;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message SMSDataRes {  
+   // 业务明细
+   repeated SMSDataInfo smsDataInfoList=11;
+   // 查询分页信息
+   ResultPageHeader pageHeader=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message SMSDataInfo {  
+   // 店铺名称
+   string shopName=12;
+   // 业务类型
+   string bussinessType=13;
+   // 手机号码
+   string toMobile=14;
+   // 短信内容
+   string content=15;
+   // 发送时间
+   int64 sedTime=16;
+   // 发送类型
+   int32 sedType=17;
+   // 失败原因
+   string failReason=18;
+   // 扣费条数
+   int32 buckleNumber=19;
+   // 短信权益账户
+   string account=20;
+   // 发送状态
+   int32 messageStatus=21;
+   // 店铺ID
+   string shopID=22;
+   // 会员卡类型ID
+   string cardTypeID=23;
+   // 通道类型
+   string thirdCode=24;
+}
+message SMSBulkQuery {  
+   // 开始时间
+   string startDate=20;
+   // 结束时间
+   string endDate=21;
+   // 集团id
+   string groupId=22;
+   // MessageKey
+   string messageKey=23;
+   // 短信状态：创建成功/失败（10/15）；受理成功/失败（20/25）；回执成功/失败（30/35）
+   int32 messageStatus=24;
+   // 短信账户id
+   string accountNo=25;
+   // 查询分页信息
+   RequestPageHeader pageHeader=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message BulkList {  
+   // 业务明细
+   repeated BuckSMS smsDataInfoList=25;
+   // 查询分页信息
+   ResultPageHeader pageHeader=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message BuckSMS {  
+   // 记录id
+   int64 id=26;
+   // 短信唯一标示
+   string messageKey=27;
+   // 签名/判重
+   string signMD5=28;
+   // 集团ID
+   int64 groupID=29;
+   // 店铺id
+   int64 shopID=30;
+   // 品牌id
+   int64 brandID=31;
+   // 会员开类型
+   int64 cardTypeID=32;
+   // 签名、渠道报备号
+   string channelSignID=33;
+   // 扣费权益账户
+   string accountNo=34;
+   // 计费条数
+   int32 chargeNum=35;
+   // 接短信的手机号码
+   string toMobile=36;
+   // 短信实际内容
+   string messageContent=37;
+   // 服务类型
+   string serviceCode=38;
+   // 业务子类型标识
+   string serviceSubCode=39;
+   // 请求发起业务线
+   string bizSrc=40;
+   // 短信类型
+   int32 messageType=41;
+   // 发送方式(国际短信/普通群发/个性群发/单发)
+   int32 sendType=42;
+   // 开始发送时间默认为0立即发送
+   int64 startSendTime=43;
+   // 发送优先级(0-10)数值越小,优先级越高
+   int32 priorityLevel=44;
+   // 提交后的有效期(分钟)， 0表示永不过期
+   int32 effectiveTimeLen=45;
+   // 已发送次数: 操作过10次不在发送
+   int32 sendCount=46;
+   // 最后发送时间
+   int64 lastSendTime=47;
+   // 短信状态：创建成功/失败（10/15）；受理成功/失败（20/25）；回执成功/失败（30/35）
+   int32 messageStatus=48;
+   // 交易状态
+   int32 transStatus=49;
+   // 备注
+   string remark=50;
+   // 扩展字段
+   string properties=51;
+   // 开始时间
+   int64 createTime=54;
+   // 开始时间
+   int32 failCount=55;
+   // 短信类别(1-群发主/0-群发明细)
+   int32 isDetail=56;
+   // 个性短信 发送参数集: 参数1，参数2
+   string messageParams=57;
+   // 手机号总数
+   int32 mobileCount=58;
+   // 扣费数量
+   int32 consumeAccount=59;
+   // 回冲数量
+   int32 correctAccount=60;
+}
+message SMSDataSelfQuery {  
+   // 查询参数
+   repeated KeyVal keyValList=27;
+   // 查询分页信息
+   RequestPageHeader pageHeader=2;
+   // 请求公共字段
+   RequestHeader header=1;
+}
+message KeyVal {  
+   // key
+   string key=25;
+   // value
+   string value=26;
+}
+message SMSDataResSelf {  
+   // 业务明细
+   repeated SMSSelfDataInfo smsDataInfoList=50;
+   // 短信状态
+   repeated SMSStatus smsStatuses=51;
+   // 查询分页信息
+   ResultPageHeader pageHeader=2;
+   // 响应公共字段
+   ResultHeader result=1;
+}
+message SMSStatus {  
+   // 短信条数
+   int32 docCount=52;
+   // 计费条数
+   int32 chargeNum=53;
+   // 短信状态
+   int32 statusKey=54;
+}
+message SMSSelfDataInfo {  
+   // 集团ID
+   int32 groupID=28;
+   // 服务商
+   string serviceCode=29;
+   // 店铺名称
+   string shopName=30;
+   // 业务类型
+   string bussinessType=31;
+   // 手机号码
+   string toMobile=32;
+   // 短信内容
+   string content=33;
+   // 发送时间
+   int64 sedTime=34;
+   // 发送类型
+   int32 sedType=35;
+   // 失败原因
+   string failReason=36;
+   // 扣费条数
+   int32 buckleNumber=37;
+   // 短信权益账户
+   string account=38;
+   // 发送状态
+   int32 messageStatus=39;
+   // 店铺ID
+   string shopID=40;
+   // 会员卡类型ID
+   string cardTypeID=41;
+   // 通道类型
+   string thirdCode=42;
+   // messageKey
+   int64 messageKey=44;
+   // 第三方messageKey
+   string thirdMessageKey=45;
+   // 品牌ID
+   int32 brandId=46;
+   // 第三方系统账户名
+   string thirdAccount=47;
+   // 通道子类型
+   string serviceSubCode=48;
+   // 业务类型
+   string bizSrc=49;
+}
+//短信数据汇总统计相关
+service SMSDataService{
+    //获取短信发送汇总数据
+    rpc querySMSData(SMSDataQuery) returns (SMSDataRes) {}
+    //营销短信查询接口
+    rpc queryMarketSMS(SMSBulkQuery) returns (BulkList) {}
+    //获取短信发送汇总数据客服
+    rpc querySMSDataSelf(SMSDataSelfQuery) returns (SMSDataResSelf) {}
+}
