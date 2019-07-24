@@ -1,6 +1,9 @@
 # -*- coding: UTF-8 -*-
 from common.module import excel_module
-import  re
+
+"""
+    将sheet中'Execute']=='Y'的所有行添加在list：r中
+"""
 
 
 class ExcelUtil(object):
@@ -8,20 +11,18 @@ class ExcelUtil(object):
     def __init__(self, excelPath):
         self.excel_handle = excel_module.Read_Excel(excelPath)
 
-
-
     def next(self):
         r = []
         for name in self.excel_handle.get_all_sheet_by_name():
             self.sheet = self.excel_handle.get_sheet_by_name(name)
 
-            # get titles
+            # get rows number
             self.rowNum = self.excel_handle.get_number_of_rows(self.sheet)
 
             # get columns number
             self.colNum = self.excel_handle.get_number_of_cols(self.sheet)
 
-            # the current column
+            # the current column(当为1时，表示第一行title)
             self.curRowNo = 1
             self.row = self.excel_handle.get_row_values(self.sheet, 0)
 
@@ -39,6 +40,10 @@ class ExcelUtil(object):
         return r
 
     def hasNext(self):
+        """
+        用于判断当前sheet页有没有内容：没有或者只有title则返回false
+        :return:
+        """
         if self.rowNum == 0 or self.rowNum <= self.curRowNo:
             return False
         else:

@@ -7,6 +7,7 @@ class Read_Excel():
         """
         初始化类
         :param file_name:传入文件名
+        data：返回的是一个xlrd.book.Book对象
         """
         self.data = xlrd.open_workbook(file_name)
 
@@ -27,13 +28,14 @@ class Read_Excel():
         通过sheet名称来获取表的内容
         :param name: sheet名称
         :return:返回sheet对象
+        sheet_by_name方法是xlrd的内部方法，来源于book.py
         """
         __sheet = self.data.sheet_by_name(name)
         return __sheet
 
     def get_all_sheet_by_name(self):
         """
-        通过sheet名称来获取表的内容
+        通过sheet名称来获取表的内容，返回所有sheet页的list
         :param name: sheet名称
         :return:返回sheet对象
         """
@@ -42,7 +44,7 @@ class Read_Excel():
 
     def get_row_values(self, sheet_obj, row_index):
         """
-        获取指定行的内容
+        获取指定行的内容,返回值为list
         :param sheet_obj: 接收sheet对象
         :param row_index: 行的索引
         :return:返回指定行的内容，类型为列表
